@@ -10,8 +10,8 @@ public class SachThamKhao extends Sach {
     }
 
     public SachThamKhao(String maSach, String tenSach, String theLoai, int namXuatBan, int donGiaBan, int soLuong,
-            String linhVuc, String trinhDo) {
-        super(maSach, tenSach, theLoai, namXuatBan, donGiaBan, soLuong);
+            TacGia maTG, NhaXuatBan maNXB, String linhVuc, String trinhDo) {
+        super(maSach, tenSach, theLoai, namXuatBan, donGiaBan, soLuong, maTG, maNXB);
         this.linhVuc = linhVuc;
         this.trinhDo = trinhDo;
     }

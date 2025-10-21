@@ -1,1 +1,10 @@
-10 rows
+S001, Cho tôi xin một vé đi tuổi thơ, Tiểu thuyết, 2008, 85000, 30, TG001, NXB001
+S002, Tôi thấy hoa vàng trên cỏ xanh, Tiểu thuyết, 2010, 90000, 25, TG001, NXB001
+S003, Sống mòn, Tiểu thuyết, 1944, 75000, 15, TG003, NXB004
+S004, Vợ nhặt, Truyện ngắn, 1962, 65000, 20, TG004, NXB004
+S005, Tắt đèn,Tiểu thuyết, 1939, 70000, 18, TG005, NXB004
+S006, Les Misérables, Tiểu thuyết, 1862, 120000, 12, TG006, NXB010
+S007, Hamlet, Kịch, 1603, 95000, 10, TG007, NXB010
+S008, Norwegian Wood, Tiểu thuyết, 1987, 105000, 14, TG008, NXB003
+S009, Harry Potter và Hòn đá Phù thủy, Fantasy, 1997, 115000, 40, TG009, NXB002
+S010, Nhà Giả Kim, Tiểu thuyết, 1988, 98000, 22, TG010, NXB005

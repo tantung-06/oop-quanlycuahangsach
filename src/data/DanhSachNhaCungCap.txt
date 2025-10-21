@@ -1,1 +1,10 @@
-10 rows
+NCC001, Công ty Sách Việt, 0241234567, 123 Trần Hưng Đạo - Hà Nội
+NCC002, Nhà sách Tri Thức, 0225123456, 45 Nguyễn Văn Cừ - Hải Phòng
+NCC003, Công ty Văn Hóa Đông Tây, 0236123456, 12 Lê Lợi - Đà Nẵng
+NCC004, Nhà xuất bản Kim Đồng, 0282345678, 60 Trần Hưng Đạo - TP.HCM
+NCC005, Công ty Phương Nam, 0283456789, 212 Nguyễn Trãi - TP.HCM
+NCC006, Cửa hàng Sách ABC, 0251123456, 89 Nguyễn Huệ - Cần Thơ
+NCC007, Công ty Minh Long, 0262123456, 34 Hai Bà Trưng - Nha Trang
+NCC008, Nhà in Trí Việt, 0273123456, 45 Nguyễn Văn Linh - Huế
+NCC009, Công ty Văn Lang, 0299123456, 78 Lê Lợi - Long An
+NCC010, Công ty Bình Minh, 0212123456, 99 Quang Trung - Bắc Ninh

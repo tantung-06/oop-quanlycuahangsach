@@ -7,19 +7,24 @@ public class Sach {
     protected String tenSach;
     protected String theLoai;
     protected int namXuatBan;
-    protected int donGiaBan;
+    protected int donGia;
     protected int soLuong;
+    protected TacGia maTG;
+    protected NhaXuatBan maNXB;
 
     public Sach() {
     }
 
-    public Sach(String maSach, String tenSach, String theLoai, int namXuatBan, int donGiaBan, int soLuong) {
+    public Sach(String maSach, String tenSach, String theLoai, int namXuatBan, int donGia, int soLuong, TacGia maTG,
+            NhaXuatBan maNXB) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.theLoai = theLoai;
         this.namXuatBan = namXuatBan;
-        this.donGiaBan = donGiaBan;
+        this.donGia = donGia;
         this.soLuong = soLuong;
+        this.maTG = maTG;
+        this.maNXB = maNXB;
     }
 
     public Sach(Sach s) {
@@ -27,8 +32,10 @@ public class Sach {
         this.tenSach = s.tenSach;
         this.theLoai = s.theLoai;
         this.namXuatBan = s.namXuatBan;
-        this.donGiaBan = s.donGiaBan;
+        this.donGia = s.donGia;
         this.soLuong = s.soLuong;
+        this.maTG = s.maTG;
+        this.maNXB = s.maNXB;
     }
 
     public String getMaSach() {
@@ -63,12 +70,12 @@ public class Sach {
         this.namXuatBan = namXuatBan;
     }
 
-    public int getDonGiaBan() {
-        return donGiaBan;
+    public int getDonGia() {
+        return donGia;
     }
 
-    public void setDonGiaBan(int donGiaBan) {
-        this.donGiaBan = donGiaBan;
+    public void setDonGia(int donGia) {
+        this.donGia = donGia;
     }
 
     public int getSoLuong() {
@@ -89,15 +96,15 @@ public class Sach {
         theLoai = sc.nextLine();
         System.out.print("Nhap nam xuat ban: ");
         namXuatBan = sc.nextInt();
-        System.out.print("Nhap don gia ban: ");
-        donGiaBan = sc.nextInt();
+        System.out.print("Nhap don gia: ");
+        donGia = sc.nextInt();
         System.out.print("Nhap so luong: ");
         soLuong = sc.nextInt();
         sc.nextLine();
     }
 
     public void xuat() {
-        System.out.printf("%-10s %-10s %-10s %-20s %-20s %-10s", maSach, tenSach, theLoai, namXuatBan, donGiaBan,
-                soLuong);
+        System.out.printf("%-10s %-10s %-10s %-20s %-20s %-10s", maSach, tenSach, theLoai, namXuatBan, donGia,
+                soLuong, maTG, maNXB);
     }
 }

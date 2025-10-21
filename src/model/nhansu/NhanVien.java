@@ -7,13 +7,13 @@ public class NhanVien {
     private String ho;
     private String ten;
     private String chucVu;
-    private String luong;
+    private int luong;
     private String soDienThoai;
 
     public NhanVien() {
     }
 
-    public NhanVien(String maNV, String ho, String ten, String chucVu, String luong, String soDienThoai) {
+    public NhanVien(String maNV, String ho, String ten, String chucVu, int luong, String soDienThoai) {
         this.maNV = maNV;
         this.ho = ho;
         this.ten = ten;
@@ -63,11 +63,11 @@ public class NhanVien {
         this.chucVu = chucVu;
     }
 
-    public String getLuong() {
+    public int getLuong() {
         return luong;
     }
 
-    public void setLuong(String luong) {
+    public void setLuong(int luong) {
         this.luong = luong;
     }
 
@@ -90,7 +90,7 @@ public class NhanVien {
         System.out.print("Nhap chuc vu: ");
         chucVu = sc.nextLine();
         System.out.print("Nhap luong: ");
-        luong = sc.nextLine();
+        luong = sc.nextInt();
         System.out.print("Nhap so dien thoai: ");
         soDienThoai = sc.nextLine();
     }

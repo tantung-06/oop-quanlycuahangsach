@@ -11,8 +11,8 @@ public class SachGiaoKhoa extends Sach {
     }
 
     public SachGiaoKhoa(String maSach, String tenSach, String theLoai, int namXuatBan, int donGiaBan, int soLuong,
-            String lop, String monHoc) {
-        super(maSach, tenSach, theLoai, namXuatBan, donGiaBan, soLuong);
+            TacGia maTG, NhaXuatBan maNXB, String lop, String monHoc) {
+        super(maSach, tenSach, theLoai, namXuatBan, donGiaBan, soLuong, maTG, maNXB);
         this.lop = lop;
         this.monHoc = monHoc;
     }

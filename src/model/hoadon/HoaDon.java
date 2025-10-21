@@ -1,12 +1,14 @@
 package src.model.hoadon;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import src.model.doitac.KhachHang;
 import src.model.nhansu.NhanVien;
 
 public class HoaDon {
     private String maHD;
-    private String ngayLap;
+    private LocalDate ngayLap;
     private String tongTien;
     private KhachHang maKH;
     private NhanVien maNV;
@@ -14,7 +16,7 @@ public class HoaDon {
     public HoaDon() {
     }
 
-    public HoaDon(String maHD, String ngayLap, String tongTien, KhachHang maKH, NhanVien maNV) {
+    public HoaDon(String maHD, LocalDate ngayLap, String tongTien, KhachHang maKH, NhanVien maNV) {
         this.maHD = maHD;
         this.ngayLap = ngayLap;
         this.tongTien = tongTien;
@@ -38,11 +40,11 @@ public class HoaDon {
         this.maHD = maHD;
     }
 
-    public String getNgayLap() {
+    public LocalDate getNgayLap() {
         return ngayLap;
     }
 
-    public void setNgayLap(String ngayLap) {
+    public void setNgayLap(LocalDate ngayLap) {
         this.ngayLap = ngayLap;
     }
 
@@ -56,15 +58,19 @@ public class HoaDon {
 
     public void nhap() {
         Scanner sc = new Scanner(System.in);
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         System.out.print("Nhap ma hoa don: ");
         maHD = sc.nextLine();
         System.out.print("Nhap ngay lap: ");
-        ngayLap = sc.nextLine();
+        String nl = sc.nextLine();
+        ngayLap = LocalDate.parse(nl, f);
         System.out.print("Nhap tong tien: ");
         tongTien = sc.nextLine();
     }
 
     public void xuat() {
-        System.out.printf("%-15s %-15s %-15s", maHD, ngayLap, tongTien);
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.printf("%-15s %-15s %-15s", maHD, ngayLap.format(f), tongTien, maKH, maNV);
     }
 }

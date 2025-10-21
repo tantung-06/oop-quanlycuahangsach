@@ -51,6 +51,10 @@ public class ChiTietPhieuNhap {
         soLuong = sc.nextInt();
     }
 
+    public void xuat() {
+        System.out.printf(" ", maPN, maSach, soLuong, donGia, thanhTien());
+    }
+
     public int thanhTien() {
         return donGia * soLuong;
     }
