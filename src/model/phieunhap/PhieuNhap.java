@@ -1,7 +1,6 @@
 package src.model.phieunhap;
 
 import java.util.Scanner;
-
 import src.model.doitac.NhaCungCap;
 import src.model.nhansu.NhanVien;
 

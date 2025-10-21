@@ -1,12 +1,10 @@
 package src.model.phieunhap;
 
 import java.util.Scanner;
-
-import src.model.hoadon.HoaDon;
 import src.model.sach.Sach;
 
 public class ChiTietPhieuNhap {
-    private HoaDon maHD;
+    private PhieuNhap maPN;
     private Sach maSach;
     private int soLuong;
     private int donGia;
@@ -15,15 +13,15 @@ public class ChiTietPhieuNhap {
     public ChiTietPhieuNhap() {
     }
 
-    public ChiTietPhieuNhap(HoaDon maHD, Sach maSach, int soLuong, int donGia) {
-        this.maHD = maHD;
+    public ChiTietPhieuNhap(PhieuNhap maPN, Sach maSach, int soLuong, int donGia) {
+        this.maPN = maPN;
         this.maSach = maSach;
         this.soLuong = soLuong;
         this.donGia = donGia;
     }
 
     public ChiTietPhieuNhap(ChiTietPhieuNhap ctpn) {
-        this.maHD = ctpn.maHD;
+        this.maPN = ctpn.maPN;
         this.maSach = ctpn.maSach;
         this.soLuong = ctpn.soLuong;
         this.donGia = ctpn.donGia;

@@ -1,7 +1,6 @@
 package src.model.hoadon;
 
 import java.util.Scanner;
-
 import src.model.doitac.KhachHang;
 import src.model.nhansu.NhanVien;
 
