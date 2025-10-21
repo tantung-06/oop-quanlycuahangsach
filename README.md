@@ -2,7 +2,7 @@ QuanLyCuaHangSach/
 │
 ├── src/
 │   │
-│   ├── data/
+│   ├── data/                                  # Thư mục chứa file dữ liệu
 │   │   ├── DanhSachChiTietHoaDon.txt
 │   │   ├── DanhSachChiTietPhieuNhap.txt
 │   │   ├── DanhSachHoaDon.txt
@@ -14,10 +14,10 @@ QuanLyCuaHangSach/
 │   │   ├── DanhSachSach.txt
 │   │   └── DanhSachTacGia.txt
 │   │
-│   ├── main/
+│   ├── main/                                  # Chương trình chính
 │   │   └── Main.java
 │   │
-│   ├── manager/
+│   ├── manager/                               # Quản lý danh sách từng đối tượng
 │   │   ├── DanhSachChiTietHoaDon.java
 │   │   ├── DanhSachChiTietPhieuNhap.java
 │   │   ├── DanhSachHoaDon.java
@@ -27,9 +27,10 @@ QuanLyCuaHangSach/
 │   │   ├── DanhSachNhaXuatBan.java
 │   │   ├── DanhSachPhieuNhap.java
 │   │   ├── DanhSachSach.java
-│   │   └── DanhSachTacGia.java
+│   │   ├── DanhSachTacGia.java
+|   |   └── QuanLyCuaHangSach.java
 │   │
-│   ├── model/
+│   ├── model/                                  # Các lớp mô hình dữ liệu
 │   │   ├── doitac/
 │   │   │   ├── KhachHang.java
 │   │   │   └── NhaCungCap.java
@@ -52,9 +53,9 @@ QuanLyCuaHangSach/
 │   │       ├── SachThamKhao.java
 │   │       └── TacGia.java
 │   │
-│   ├── ui/
+│   ├── ui/                                  # Menu giao diện
 │   │   └── Menu.java
 │   │
-│   └── utils/
+│   └── utils/                               # Xử lí đọc/ghi file
 │       └── FileHandle.java
 └──
