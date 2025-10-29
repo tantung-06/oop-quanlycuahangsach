@@ -2,7 +2,7 @@ package src.model.sach;
 
 import java.util.Scanner;
 
-public class Sach {
+public abstract class Sach {
     protected String maSach;
     protected String tenSach;
     protected String theLoai;
@@ -13,6 +13,8 @@ public class Sach {
     protected NhaXuatBan maNXB;
 
     public Sach() {
+        maTG = new TacGia();
+        maNXB = new NhaXuatBan();
     }
 
     public Sach(String maSach, String tenSach, String theLoai, int namXuatBan, int donGia, int soLuong, TacGia maTG,
@@ -86,6 +88,22 @@ public class Sach {
         this.soLuong = soLuong;
     }
 
+    public TacGia getTacGia() {
+        return maTG;
+    }
+
+    public void setTacGia(TacGia maTG) {
+        this.maTG = maTG;
+    }
+
+    public NhaXuatBan getNhaXuatBan() {
+        return maNXB;
+    }
+
+    public void setNhaXuatBan(NhaXuatBan maNXB) {
+        this.maNXB = maNXB;
+    }
+
     public void nhap() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhap ma sach: ");
@@ -101,10 +119,23 @@ public class Sach {
         System.out.print("Nhap so luong: ");
         soLuong = sc.nextInt();
         sc.nextLine();
+
+        maTG = new TacGia();
+        System.out.print("Nhap ma tac gia: ");
+        maTG.setMaTG(sc.nextLine());
+
+        maNXB = new NhaXuatBan();
+        System.out.print("Nhap ma nha xuat ban: ");
+        maNXB.setMaNXB(sc.nextLine());
     }
 
     public void xuat() {
-        System.out.printf("%-10s %-10s %-10s %-20s %-20s %-10s", maSach, tenSach, theLoai, namXuatBan, donGia,
-                soLuong, maTG, maNXB);
+        System.out.printf("%-10s %-10s %-10s %-20s %-20s %-10s %-10s %-10s", maSach, tenSach, theLoai, namXuatBan,
+                donGia,
+                soLuong, maTG.getMaTG(), maNXB.getMaNXB());
+    }
+
+    public String loai() {
+        return "Sach";
     }
 }

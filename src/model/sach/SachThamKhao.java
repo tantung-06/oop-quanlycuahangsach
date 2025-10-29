@@ -53,4 +53,9 @@ public class SachThamKhao extends Sach {
         super.xuat();
         System.out.printf(" %-5s %-10s %-10s %-10s\n", "-", "-", linhVuc, trinhDo);
     }
+
+    @Override
+    public String loai() {
+        return "Tham khao";
+    }
 }

@@ -54,4 +54,9 @@ public class SachGiaoKhoa extends Sach {
         super.xuat();
         System.out.printf(" %-5s %-10s %-10s %-10s\n", lop, monHoc, "-", "-");
     }
+
+    @Override
+    public String loai() {
+        return "Giao khoa";
+    }
 }

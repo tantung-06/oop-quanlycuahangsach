@@ -59,3 +59,25 @@ QuanLyCuaHangSach/
 │ └── utils/ # Xử lí đọc/ghi file
 │ └── FileHandle.java
 └──
+
+=== QUY TRÌNH CHẤM ĐỒ ÁN ===
+
+1. 4 bạn ngồi gần nhau
+2. 1 bạn chạy đề mô
+3. tính hợp lệ: coi có trùng mã không, update số lượng
+4. mỗi thành viên sẽ chọn gói điểm cho bản thân
+
+- không code lại: 1đ
+- 50%: làm tối thiểu 3 lớp danh sách - cô sẽ chọn hàm bất kì để code lại
+- 70%: tối thiểu 7 lớp danh sách phải code được thống kê
+- 100%: cô chỉ chỗ nào code lại chỗ đó
+- gói zero điểm quá trình không code lại đc gói mình chọn
+  Ghi chú: nếu điểm ra không thỏa đáng bạn có thể xin chấm lại trước khi kí tên
+
+=== CHỨC NĂNG CỦA DANH SÁCH ===
+
+1. Xem
+2. Thêm
+3. Sửa
+4. Tìm kiếm: theo mã, theo tên
+5. Thống kê: tối thiểu 2 thống kê

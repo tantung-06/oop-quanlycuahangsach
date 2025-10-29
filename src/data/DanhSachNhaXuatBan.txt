@@ -1,10 +1,10 @@
-NXB001, Nhà Xuất Bản Trẻ, 161B Lý Chính Thắng, Quận 3, TP.HCM
-NXB002, Nhà Xuất Bản Kim Đồng, 55 Quang Trung, Quận Hoàn Kiếm, Hà Nội
-NXB003, Nhà Xuất Bản Tổng Hợp TP.HCM, 62 Nguyễn Thị Minh Khai, Quận 1, TP.HCM
-NXB004, Nhà Xuất Bản Văn Học, 18 Nguyễn Trường Tộ, Quận Ba Đình, Hà Nội
-NXB005, Nhà Xuất Bản Giáo Dục, 81 Trần Hưng Đạo, Quận 1, TP.HCM
-NXB006, Nhà Xuất Bản Lao Động, 175 Giảng Võ, Quận Đống Đa, Hà Nội
-NXB007, Nhà Xuất Bản Chính Trị Quốc Gia, 24 Quang Trung, Quận Hoàn Kiếm, Hà Nội
-NXB008, Nhà Xuất Bản Phụ Nữ Việt Nam, 39 Hàng Chuối, Quận Hai Bà Trưng, Hà Nội
-NXB009, Nhà Xuất Bản Thanh Niên, 64 Bà Triệu, Quận Hoàn Kiếm, Hà Nội
-NXB010, Nhà Xuất Bản Khoa Học Tự Nhiên, 45 Lê Lợi, Quận 1, TP.HCM
+NXB01,Giao Duc Viet Nam,Ha Noi
+NXB02,Tre,TP HCM
+NXB03,Dai Hoc Quoc Gia,Ha Noi
+NXB04,Giao Duc Thanh Pho,TP HCM
+NXB05,Van Hoa,Da Nang
+NXB06,Khoa Hoc Ky Thuat,Ha Noi
+NXB07,Tong Hop,TP HCM
+NXB08,Kim Dong,Ha Noi
+NXB09,Lao Dong,Ha Noi
+NXB10,Thong Tin Truyen Thong,Ha Noi

@@ -1,10 +1,10 @@
-S001, Cho tôi xin một vé đi tuổi thơ, Tiểu thuyết, 2008, 85000, 30, TG001, NXB001
-S002, Tôi thấy hoa vàng trên cỏ xanh, Tiểu thuyết, 2010, 90000, 25, TG001, NXB001
-S003, Sống mòn, Tiểu thuyết, 1944, 75000, 15, TG003, NXB004
-S004, Vợ nhặt, Truyện ngắn, 1962, 65000, 20, TG004, NXB004
-S005, Tắt đèn,Tiểu thuyết, 1939, 70000, 18, TG005, NXB004
-S006, Les Misérables, Tiểu thuyết, 1862, 120000, 12, TG006, NXB010
-S007, Hamlet, Kịch, 1603, 95000, 10, TG007, NXB010
-S008, Norwegian Wood, Tiểu thuyết, 1987, 105000, 14, TG008, NXB003
-S009, Harry Potter và Hòn đá Phù thủy, Fantasy, 1997, 115000, 40, TG009, NXB002
-S010, Nhà Giả Kim, Tiểu thuyết, 1988, 98000, 22, TG010, NXB005
+Giao khoa,S01,Toan lop 10,Giao duc,2022,50000,100,TG01,NXB01,10,Toan
+Giao khoa,S02,Ngu van lop 11,Giao duc,2021,48000,120,TG02,NXB02,11,Ngu van
+Giao khoa,S03,Sinh hoc 12,Giao duc,2023,52000,90,TG03,NXB03,12,Sinh hoc
+Giao khoa,S04,Lich su lop 9,Giao duc,2020,45000,80,TG04,NXB04,9,Lich su
+Giao khoa,S05,Dia ly 8,Giao duc,2022,47000,95,TG05,NXB05,8,Dia ly
+Tham khao,S06,On thi THPT Quoc Gia Toan,Giao duc,2023,85000,60,TG06,NXB06,1,1
+Tham khao,S07,Bai tap Nang cao Vat ly 12,Giao duc,2021,78000,70,TG07,NXB07,2,2
+Tham khao,S08,Bo de On tap Hoa hoc,Giao duc,2024,82000,65,TG08,NXB08,3,3
+Tham khao,S09,Hoc tot Tieng Anh 9,Giao duc,2023,69000,110,TG09,NXB09,4,4
+Tham khao,S10,Cam nang giao vien,Giao duc,2020,90000,50,TG10,NXB10,5,5

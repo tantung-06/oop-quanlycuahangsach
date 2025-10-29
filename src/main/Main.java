@@ -7,7 +7,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         DanhSachSach s = new DanhSachSach();
-        s.nhap();
-        s.xuat();
+        s.docFile();
+        s.xuatSach();
+        s.themSach();
+        s.ghiFile();
     }
 }
