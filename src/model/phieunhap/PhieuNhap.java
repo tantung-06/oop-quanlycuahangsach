@@ -9,14 +9,16 @@ import src.model.nhansu.NhanVien;
 public class PhieuNhap {
     private String maPN;
     private LocalDate ngayLap;
-    private String tongTien;
+    private double tongTien;
     private NhaCungCap maNCC;
     private NhanVien maNV;
 
     public PhieuNhap() {
+        maNCC = new NhaCungCap();
+        maNV = new NhanVien();
     }
 
-    public PhieuNhap(String maPN, LocalDate ngayLap, String tongTien, NhaCungCap maNCC, NhanVien maNV) {
+    public PhieuNhap(String maPN, LocalDate ngayLap, double tongTien, NhaCungCap maNCC, NhanVien maNV) {
         this.maPN = maPN;
         this.ngayLap = ngayLap;
         this.tongTien = tongTien;
@@ -48,12 +50,28 @@ public class PhieuNhap {
         this.ngayLap = ngayLap;
     }
 
-    public String getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(String tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
+    }
+
+    public NhaCungCap getNhaCungCap() {
+        return maNCC;
+    }
+
+    public void setNhaCungCap(NhaCungCap maNCC) {
+        this.maNCC = maNCC;
+    }
+
+    public NhanVien getNhanVien() {
+        return maNV;
+    }
+
+    public void setNhanVien(NhanVien maNV) {
+        this.maNV = maNV;
     }
 
     public void nhap() {
@@ -66,10 +84,20 @@ public class PhieuNhap {
         String nl = sc.nextLine();
         ngayLap = LocalDate.parse(nl, f);
         System.out.print("Nhap tong tien: ");
+        tongTien = sc.nextDouble();
+        sc.nextLine();
+
+        maNCC = new NhaCungCap();
+        System.out.print("Nhap ma nha cung cap: ");
+        maNCC.setMaNCC(sc.nextLine());
+
+        maNV = new NhanVien();
+        System.out.print("Nhap ma nhan vien: ");
+        maNV.setMaNV(sc.nextLine());
     }
 
     public void xuat() {
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.printf("%-15s %-15s", maPN, ngayLap.format(f), tongTien, maNCC, maNV);
+        System.out.printf("%-15s %-15s", maPN, ngayLap.format(f), tongTien, maNCC.getMaNCC(), maNV.getMaNV());
     }
 }

@@ -131,8 +131,7 @@ public abstract class Sach {
 
     public void xuat() {
         System.out.printf("%-10s %-10s %-10s %-20s %-20s %-10s %-10s %-10s", maSach, tenSach, theLoai, namXuatBan,
-                donGia,
-                soLuong, maTG.getMaTG(), maNXB.getMaNXB());
+                donGia, soLuong, maTG.getMaTG(), maNXB.getMaNXB());
     }
 
     public String loai() {

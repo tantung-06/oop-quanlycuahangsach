@@ -7,7 +7,6 @@ public class SachGiaoKhoa extends Sach {
     private String monHoc;
 
     public SachGiaoKhoa() {
-
     }
 
     public SachGiaoKhoa(String maSach, String tenSach, String theLoai, int namXuatBan, int donGiaBan, int soLuong,

@@ -294,6 +294,7 @@ public class DanhSachSach {
         }
         return tk;
     }
+    // Thống kê số lượng sách
 
     // === Ghi file ===
     public void ghiFile() {

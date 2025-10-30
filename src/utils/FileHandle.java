@@ -7,3 +7,7 @@
 // đọc loại đối tượng con ra trước, sau đó ktr loại gì r mới đọc tiếp
 // vd: đọc ra loại = 1 r mới new r đọc tiếp các thuộc tính tiếp theo... đọc đrl
 // nếu loại là 2 thì ... đọc ngành cao đẳng
+
+// Thống kê theo quý: danh sach hoa don, danh sach phieu nhap
+// - thống kê ngày lập của hóa đơn theo quý
+// - thống kê ngày lập của phiếu nhập theo quý

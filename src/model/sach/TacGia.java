@@ -1,25 +1,22 @@
 package src.model.sach;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.util.Scanner;
 
 public class TacGia {
     private String maTG;
-    private String ten;
+    private String tenTG;
     private LocalDate ngaySinh;
     private String quocTich;
 
     public TacGia() {
-
     }
 
-    public TacGia(String maTG, String ten, LocalDate ngaySinh,
-            String quocTich, String tieuSu) {
+    public TacGia(String maTG, String tenTG, LocalDate ngaySinh,
+            String quocTich) {
         this.maTG = maTG;
-        this.ten = ten;
+        this.tenTG = tenTG;
         this.ngaySinh = ngaySinh;
         this.quocTich = quocTich;
 
@@ -27,7 +24,7 @@ public class TacGia {
 
     public TacGia(TacGia tg) {
         this.maTG = tg.maTG;
-        this.ten = tg.ten;
+        this.tenTG = tg.tenTG;
         this.ngaySinh = tg.ngaySinh;
         this.quocTich = tg.quocTich;
     }
@@ -40,12 +37,12 @@ public class TacGia {
         this.maTG = maTG;
     }
 
-    public String getTen() {
-        return ten;
+    public String getTenTG() {
+        return tenTG;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setTenTG(String tenTG) {
+        this.tenTG = tenTG;
     }
 
     public LocalDate getNgaySinh() {
@@ -64,112 +61,23 @@ public class TacGia {
         this.quocTich = quocTich;
     }
 
-    public LocalDate hamNgaySinh() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // tao format cua ngay/thang/nam
-        LocalDate ngaySinhTemp = null;
-        while (true) {
-            System.out.print("Nhap nhay sinh (dd/MM/yyy): ");
-            String temp = in.readLine();
+    public void nhap() {
+        Scanner sc = new Scanner(System.in);
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            try {
-                ngaySinhTemp = LocalDate.parse(temp, fmt); // chuyển chuỗi từ temp thành format ngày
-
-                if (ngaySinhTemp.isAfter(LocalDate.now())) { // kiểm tra ngày sinh có quá ngày hiện tại
-                    System.out.println("Ngay sinh khong hop le! Hay nhap lai!");
-                } else {
-                    break;
-                }
-            } catch (DateTimeParseException e) { // kiểm tra hợp lệ của ngày tháng
-                System.out.println("Ngay sinh khong hop le! Hay nhap lai!");
-            }
-        }
-
-        return ngaySinhTemp;
-    }
-
-    public String hamMaTG() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        String temp = "";
-        boolean check = true;
-        System.out.print("Ma nha tac gia(6 ky tu): ");
-        while (check) {
-            temp = in.readLine();
-            check = false;
-            if (temp.length() != 6) {
-                check = true;
-                System.out.println("Cu phap khong dung! Hay nhap lai: ");
-            }
-        }
-
-        return temp;
-    }
-
-    public void nhap() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Nhap thong tin tac gia");
-        System.out.print("Ten tac gia: ");
-        ten = in.readLine();
-        ten = ten.trim().replaceAll("\\s+", " ");// Xoa khoang cach du thua
-
-        System.out.print("Ma tac gia: ");
-        maTG = in.readLine();
-
-        System.out.print("Ngay sinh: ");
-        ngaySinh = hamNgaySinh();
-
-        System.out.print("Quoc tich: ");
-        quocTich = in.readLine();
-
+        System.out.print("Nhap ma tac gia: ");
+        maTG = sc.nextLine();
+        System.out.print("Nhap ten tac gia: ");
+        tenTG = sc.nextLine();
+        System.out.print("Nhap ngay sinh: ");
+        String ns = sc.nextLine();
+        ngaySinh = LocalDate.parse(ns, f);
+        System.out.print("Nhap quoc tich: ");
+        quocTich = sc.nextLine();
     }
 
     public void xuat() {
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.printf("%-10s %-25s %-15s %-20s\n",
-                maTG, ten, ngaySinh.format(fmt), quocTich);
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.printf("", maTG, tenTG, ngaySinh.format(f), quocTich);
     }
-
-    public void suaThongTin() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        while (true) {
-            System.out.println("""
-                    Ban muon thay doi thong tin gi!
-                    1. Ten tac gia
-                    2. Ma tac gia
-                    3. Ngay sinh
-                    4. Quoc tich
-                    0. Khong thay doi gi nua""");
-            int choice;
-            System.out.print("Lua chon: ");
-            choice = Integer.parseInt(in.readLine());
-            switch (choice) {
-                case 1: {
-                    System.out.print("Ten tac gia: ");
-                    ten = in.readLine();
-                    ten = ten.trim().replaceAll("\\s+", " ");
-                    break;
-                }
-                case 2: {
-                    maTG = hamMaTG();// Nhap ma nv
-                    break;
-                }
-                case 3: {
-                    ngaySinh = hamNgaySinh();
-                    break;
-                }
-                case 4: {
-                    System.out.print("Quoc tich: ");
-                    quocTich = in.readLine();
-                    break;
-                }
-                case 0:
-                    return;
-                default: {
-                    System.out.print("Cu phap khong dung, hay nhap lai!");
-                    break;
-                }
-            }
-        }
-    }
-
 }
