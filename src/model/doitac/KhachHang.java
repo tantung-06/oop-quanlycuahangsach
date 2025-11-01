@@ -95,7 +95,22 @@ public class KhachHang {
         diaChi = sc.nextLine();
     }
 
+    public void nhapKhongMa() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap ho: ");
+        ho = sc.nextLine();
+        System.out.print("Nhap ten: ");
+        ten = sc.nextLine();
+        System.out.print("Nhap so dien thoai: ");
+        soDienThoai = sc.nextLine();
+        System.out.print("Nhap email: ");
+        email = sc.nextLine();
+        System.out.print("Nhap dia chi: ");
+        diaChi = sc.nextLine();
+    }
+
     public void xuat() {
-        System.out.printf("%-15s %-10s %-10s %-15s %-30s %-15s\n", maKH, ho, ten, soDienThoai, email, soDienThoai);
+        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n", maKH, ho, ten, soDienThoai, email,
+                diaChi);
     }
 }

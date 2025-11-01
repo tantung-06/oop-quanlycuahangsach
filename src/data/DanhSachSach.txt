@@ -1,10 +1,10 @@
-Giao khoa,S01,Toan lop 10,Giao duc,2022,50000,100,TG01,NXB01,10,Toan
-Giao khoa,S02,Ngu van lop 11,Giao duc,2021,48000,120,TG02,NXB02,11,Ngu van
-Giao khoa,S03,Sinh hoc 12,Giao duc,2023,52000,90,TG03,NXB03,12,Sinh hoc
-Giao khoa,S04,Lich su lop 9,Giao duc,2020,45000,80,TG04,NXB04,9,Lich su
-Giao khoa,S05,Dia ly 8,Giao duc,2022,47000,95,TG05,NXB05,8,Dia ly
-Tham khao,S06,On thi THPT Quoc Gia Toan,Giao duc,2023,85000,60,TG06,NXB06,1,1
-Tham khao,S07,Bai tap Nang cao Vat ly 12,Giao duc,2021,78000,70,TG07,NXB07,2,2
-Tham khao,S08,Bo de On tap Hoa hoc,Giao duc,2024,82000,65,TG08,NXB08,3,3
-Tham khao,S09,Hoc tot Tieng Anh 9,Giao duc,2023,69000,110,TG09,NXB09,4,4
-Tham khao,S10,Cam nang giao vien,Giao duc,2020,90000,50,TG10,NXB10,5,5
+Giao khoa,S001,Toan lop 1,Giao duc,2021,25000,100,TG001,NXB01,1,Toan
+Giao khoa,S002,Tieng Viet lop 1,Giao duc,2021,23000,80,TG002,NXB02,1,Tieng Viet
+Giao khoa,S003,Dia ly lop 5,Xa hoi,2023,31000,90,TG003,NXB03,5,Dia ly
+Giao khoa,S004,Dao duc lop 3,Giao duc,2022,26000,65,TG004,NXB04,3,Dao duc
+Giao khoa,S005,Lich su lop 4,Xa hoi,2023,30000,85,TG005,NXB05,4,Lich su
+Tham khao,S006,Giai tich nang cao,Tham khao,2019,80000,50,TG006,NXB06,Toan,Dai hoc
+Tham khao,S007,Dai so tuyen tinh,Tham khao,2020,75000,40,TG007,NXB07,Toan,Dai hoc
+Tham khao,S008,Vat ly co dien,Tham khao,2021,76000,45,TG008,NXB08,Vat ly,Dai hoc
+Tham khao,S009,Hoa hoc huu co,Tham khao,2021,78000,60,TG009,NXB09,Hoa hoc,Dai hoc
+Tham khao,S010,Sinh hoc phan tu,Tham khao,2022,70000,55,TG010,NXB10,Sinh hoc,Dai hoc

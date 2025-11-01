@@ -49,9 +49,19 @@ public class SachThamKhao extends Sach {
     }
 
     @Override
+    public void nhapKhongMa() {
+        Scanner sc = new Scanner(System.in);
+        super.nhapKhongMa();
+        System.out.print("Nhap linh vuc: ");
+        linhVuc = sc.nextLine();
+        System.out.print("Nhap trinh do: ");
+        trinhDo = sc.nextLine();
+    }
+
+    @Override
     public void xuat() {
         super.xuat();
-        System.out.printf(" %-5s %-10s %-10s %-10s\n", "-", "-", linhVuc, trinhDo);
+        System.out.printf(" %-15s | %-15s | %-15s | %-15s |\n", "-", "-", linhVuc, trinhDo);
     }
 
     @Override

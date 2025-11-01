@@ -78,6 +78,6 @@ public class TacGia {
 
     public void xuat() {
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.printf("", maTG, tenTG, ngaySinh.format(f), quocTich);
+        System.out.printf("| %-20s | %-20s | %-20s | %-20s |\n", maTG, tenTG, ngaySinh.format(f), quocTich);
     }
 }

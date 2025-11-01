@@ -1,10 +1,10 @@
-NXB01,Giao Duc Viet Nam,Ha Noi
-NXB02,Tre,TP HCM
-NXB03,Dai Hoc Quoc Gia,Ha Noi
-NXB04,Giao Duc Thanh Pho,TP HCM
-NXB05,Van Hoa,Da Nang
-NXB06,Khoa Hoc Ky Thuat,Ha Noi
-NXB07,Tong Hop,TP HCM
-NXB08,Kim Dong,Ha Noi
-NXB09,Lao Dong,Ha Noi
-NXB10,Thong Tin Truyen Thong,Ha Noi
+NXB01,NXB Giao Duc,Ha Noi
+NXB02,NXB Tre,Ho Chi Minh
+NXB03,NXB Dai Hoc Quoc Gia,Ha Noi
+NXB04,NXB Kim Dong,Ha Noi
+NXB05,NXB Thanh Nien,Ho Chi Minh
+NXB06,NXB Khoa Hoc Tu Nhien,Ha Noi
+NXB07,NXB Bach Khoa,Ha Noi
+NXB08,NXB Dai Hoc Su Pham,Ha Noi
+NXB09,NXB Y Hoc,Ho Chi Minh
+NXB10,NXB Nong Nghiep,Ha Noi

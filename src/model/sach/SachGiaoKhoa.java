@@ -49,9 +49,19 @@ public class SachGiaoKhoa extends Sach {
     }
 
     @Override
+    public void nhapKhongMa() {
+        Scanner sc = new Scanner(System.in);
+        super.nhapKhongMa();
+        System.out.print("Nhap lop: ");
+        lop = sc.nextLine();
+        System.out.print("Nhap mon hoc: ");
+        monHoc = sc.nextLine();
+    }
+
+    @Override
     public void xuat() {
         super.xuat();
-        System.out.printf(" %-5s %-10s %-10s %-10s\n", lop, monHoc, "-", "-");
+        System.out.printf(" %-15s | %-15s | %-15s | %-15s |\n", lop, monHoc, "-", "-");
     }
 
     @Override

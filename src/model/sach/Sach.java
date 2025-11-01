@@ -129,9 +129,32 @@ public abstract class Sach {
         maNXB.setMaNXB(sc.nextLine());
     }
 
+    public void nhapKhongMa() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap ten sach: ");
+        tenSach = sc.nextLine();
+        System.out.print("Nhap the loai: ");
+        theLoai = sc.nextLine();
+        System.out.print("Nhap nam xuat ban: ");
+        namXuatBan = sc.nextInt();
+        System.out.print("Nhap don gia: ");
+        donGia = sc.nextInt();
+        System.out.print("Nhap so luong: ");
+        soLuong = sc.nextInt();
+        sc.nextLine();
+
+        maTG = new TacGia();
+        System.out.print("Nhap ma tac gia: ");
+        maTG.setMaTG(sc.nextLine());
+
+        maNXB = new NhaXuatBan();
+        System.out.print("Nhap ma nha xuat ban: ");
+        maNXB.setMaNXB(sc.nextLine());
+    }
+
     public void xuat() {
-        System.out.printf("%-10s %-10s %-10s %-20s %-20s %-10s %-10s %-10s", maSach, tenSach, theLoai, namXuatBan,
-                donGia, soLuong, maTG.getMaTG(), maNXB.getMaNXB());
+        System.out.printf("| %-15s | %-20s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |", maSach, tenSach, theLoai,
+                namXuatBan, donGia, soLuong, maTG.getMaTG(), maNXB.getMaNXB());
     }
 
     public String loai() {

@@ -70,6 +70,6 @@ public class NhaCungCap {
     }
 
     public void xuat() {
-        System.out.printf("%-15s %-20s %-15s %-20s\n", maNCC, ten, soDienThoai, diaChi);
+        System.out.printf("| %-20s | %-35s | %-20s | %-20s |\n", maNCC, ten, soDienThoai, diaChi);
     }
 }

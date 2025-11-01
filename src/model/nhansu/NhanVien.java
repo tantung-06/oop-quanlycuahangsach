@@ -98,6 +98,7 @@ public class NhanVien {
     }
 
     public void xuat() {
-        System.out.printf("", maNV, ho, ten, chucVu, luong, soDienThoai);
+        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n", maNV, ho, ten, chucVu, luong,
+                soDienThoai);
     }
 }

@@ -57,6 +57,6 @@ public class NhaXuatBan {
     }
 
     public void xuat() {
-        System.out.printf("", maNXB, tenNXB, diaChi);
+        System.out.printf("| %-20s | %-20s | %-20s |\n", maNXB, tenNXB, diaChi);
     }
 }

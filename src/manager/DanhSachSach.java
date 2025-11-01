@@ -22,14 +22,14 @@ public class DanhSachSach {
         s = null;
     }
 
-    // Kiểm tra mã sách có duy nhất không?
-    public boolean maSachDuyNhat(String maSach, int soLuongHienTai) {
+    // Kiểm tra mã sách có trùng không
+    public boolean kiemTraMaSach(String maSach, int soLuongHienTai) {
         for (int i = 0; i < soLuongHienTai; i++) {
             if (s[i].getMaSach().equalsIgnoreCase(maSach)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     // Nhập sách
@@ -61,7 +61,18 @@ public class DanhSachSach {
                 s[i] = new SachThamKhao();
             }
 
-            s[i].nhap();
+            String maSach;
+            do {
+                System.out.print("Nhap ma sach: ");
+                maSach = sc.nextLine();
+                if (kiemTraMaSach(maSach, i)) {
+                    System.out.println("Ma sach da ton tai, vui long nhap lai!");
+                }
+            } while (kiemTraMaSach(maSach, i));
+
+            s[i].setMaSach(maSach);
+
+            s[i].nhapKhongMa();
         }
     }
 
@@ -73,9 +84,10 @@ public class DanhSachSach {
         }
 
         System.out.println("----- Danh sach sach -----");
-        System.out.printf("%-10s %-10s %-10s %-20s %-20s %-10s %-5s %-10s %-10s %-10s\n", "Ma sach", "Ten sach",
-                "The loai", "Nam xuat ban", "Don gia ban", "So luong", "Lop",
-                "Mon hoc", "Linh vuc", "Trinh do");
+        System.out.printf(
+                "| %-15s | %-20s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n",
+                "Ma sach", "Ten sach", "The loai", "Nam xuat ban", "Don gia ban", "So luong", "Ma tac gia",
+                "Ma nha xuat ban", "Lop", "Mon hoc", "Linh vuc", "Trinh do");
         for (int i = 0; i < n; i++) {
             s[i].xuat();
         }
@@ -102,7 +114,18 @@ public class DanhSachSach {
         } else {
             x = new SachThamKhao();
         }
-        x.nhap();
+
+        String maSach;
+        do {
+            System.out.print("Nhap ma sach: ");
+            maSach = sc.nextLine();
+            if (kiemTraMaSach(maSach, n)) {
+                System.out.println("Ma sach da ton tai, vui long nhap lai!");
+            }
+        } while (kiemTraMaSach(maSach, n));
+        x.setMaSach(maSach);
+
+        x.nhapKhongMa();
 
         s = Arrays.copyOf(s, n + 1);
         s[n] = x;
@@ -113,6 +136,7 @@ public class DanhSachSach {
     public void xoaSachTheoMa() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
+            return;
         }
 
         Scanner sc = new Scanner(System.in);
@@ -144,6 +168,7 @@ public class DanhSachSach {
     public void suaSachTaiTruong() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
+            return;
         }
 
         Scanner sc = new Scanner(System.in);
@@ -233,6 +258,7 @@ public class DanhSachSach {
     public void timKiemSachTheoMa() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
+            return;
         }
 
         Scanner sc = new Scanner(System.in);
@@ -257,6 +283,7 @@ public class DanhSachSach {
     public void timKiemSachTheoTen() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
+            return;
         }
 
         Scanner sc = new Scanner(System.in);
@@ -278,7 +305,7 @@ public class DanhSachSach {
     }
 
     // === Thống kê ===
-    // Thống kê tổng sách giao khoa, tổng sách tham khao
+    // Thống kê số lượng của từng loại sách
     public int[] thongKeTongSoSach() {
         int[] tk = new int[2];
 
@@ -294,53 +321,36 @@ public class DanhSachSach {
         }
         return tk;
     }
-    // Thống kê số lượng sách
 
-    // === Ghi file ===
-    public void ghiFile() {
-        try {
-            FileWriter fw = new FileWriter("src/data/DanhSachSach.txt");
-            BufferedWriter bw = new BufferedWriter(fw);
+    public int[] thongKeTongSoSach1() {
+        int sgk = 0;
+        int stk = 0;
 
-            for (int i = 0; i < n; i++) {
-                if (s[i] instanceof SachGiaoKhoa) {
-                    SachGiaoKhoa sgk = (SachGiaoKhoa) s[i];
-                    bw.write("Giao khoa," +
-                            sgk.getMaSach() + "," +
-                            sgk.getTenSach() + "," +
-                            sgk.getTheLoai() + "," +
-                            sgk.getNamXuatBan() + "," +
-                            sgk.getDonGia() + "," +
-                            sgk.getSoLuong() + "," +
-                            sgk.getTacGia().getMaTG() + "," +
-                            sgk.getNhaXuatBan().getMaNXB() + "," +
-                            sgk.getLop() + "," +
-                            sgk.getMonHoc());
-                } else if (s[i] instanceof SachThamKhao) {
-                    SachThamKhao stk = (SachThamKhao) s[i];
-                    bw.write("Tham khao," +
-                            stk.getMaSach() + "," +
-                            stk.getTenSach() + "," +
-                            stk.getTheLoai() + "," +
-                            stk.getNamXuatBan() + "," +
-                            stk.getDonGia() + "," +
-                            stk.getSoLuong() + "," +
-                            stk.getTacGia().getMaTG() + "," +
-                            stk.getNhaXuatBan().getMaNXB() + "," +
-                            stk.getLinhVuc() + "," +
-                            stk.getTrinhDo());
-                }
-                bw.newLine();
-            }
-            bw.close();
-            fw.close();
-            System.out.println("Ghi file thanh cong!");
-        } catch (Exception e) {
-            System.out.println("Loi ghi file" + e.getMessage());
+        for (int i = 0; i < n; i++) {
+            if (s[i] instanceof SachGiaoKhoa)
+                sgk++;
+            else if (s[i] instanceof SachThamKhao)
+                stk++;
         }
+
+        return new int[] { sgk, stk };
     }
 
-    // === Đọc file ===
+    // Thống kê tổng số lượng tồn kho của sách
+    public int[] thongKeSoLuongSach() {
+        int tong = 0;
+        for (int i = 0; i < n; i++) {
+            tong += s[i].getSoLuong();
+        }
+        return new int[] { tong };
+    }
+
+    // Thống kê tổng số lượng tồn kho theo loại
+
+    // Thống kê tổng giá trị tồn kho (đơn giá * số lượng)
+
+    // === Đọc - Ghi file ===
+    // Đọc file
     public void docFile() {
         try {
             FileReader fr = new FileReader("src/data/DanhSachSach.txt");
@@ -395,7 +405,55 @@ public class DanhSachSach {
             fri.close();
             System.out.println("Doc file thanh cong!");
         } catch (Exception e) {
-            System.out.println("Loi file doc: " + e.getMessage());
+            System.out.println("Loi doc file: " + e.getMessage());
+            e.printStackTrace();
+
         }
     }
+
+    // Ghi file
+    public void ghiFile() {
+        try {
+            FileWriter fw = new FileWriter("src/data/DanhSachSach.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for (int i = 0; i < n; i++) {
+                if (s[i] instanceof SachGiaoKhoa) {
+                    SachGiaoKhoa sgk = (SachGiaoKhoa) s[i];
+                    bw.write("Giao khoa," +
+                            sgk.getMaSach() + "," +
+                            sgk.getTenSach() + "," +
+                            sgk.getTheLoai() + "," +
+                            sgk.getNamXuatBan() + "," +
+                            sgk.getDonGia() + "," +
+                            sgk.getSoLuong() + "," +
+                            sgk.getTacGia().getMaTG() + "," +
+                            sgk.getNhaXuatBan().getMaNXB() + "," +
+                            sgk.getLop() + "," +
+                            sgk.getMonHoc());
+                } else if (s[i] instanceof SachThamKhao) {
+                    SachThamKhao stk = (SachThamKhao) s[i];
+                    bw.write("Tham khao," +
+                            stk.getMaSach() + "," +
+                            stk.getTenSach() + "," +
+                            stk.getTheLoai() + "," +
+                            stk.getNamXuatBan() + "," +
+                            stk.getDonGia() + "," +
+                            stk.getSoLuong() + "," +
+                            stk.getTacGia().getMaTG() + "," +
+                            stk.getNhaXuatBan().getMaNXB() + "," +
+                            stk.getLinhVuc() + "," +
+                            stk.getTrinhDo());
+                }
+                bw.newLine();
+            }
+            bw.close();
+            fw.close();
+            System.out.println("Ghi file thanh cong!");
+        } catch (Exception e) {
+            System.out.println("Loi ghi file" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }
