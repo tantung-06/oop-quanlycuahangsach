@@ -3,19 +3,21 @@ package src.model.phieunhap;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
+import src.manager.DanhSachChiTietPhieuNhap;
+import src.manager.DanhSachNhaCungCap;
+import src.manager.DanhSachNhanVien;
 import src.model.doitac.NhaCungCap;
 import src.model.nhansu.NhanVien;
 
 public class PhieuNhap {
     private String maPN;
     private LocalDate ngayLap;
-    private double tongTien;
+    private double tongTien; // tong cac thanh tien trong ct hoa don
     private NhaCungCap maNCC;
     private NhanVien maNV;
 
     public PhieuNhap() {
-        maNCC = new NhaCungCap();
-        maNV = new NhanVien();
     }
 
     public PhieuNhap(String maPN, LocalDate ngayLap, double tongTien, NhaCungCap maNCC, NhanVien maNV) {
@@ -26,12 +28,24 @@ public class PhieuNhap {
         this.maNV = maNV;
     }
 
+    public PhieuNhap(String maPN) {
+        this.maPN = maPN;
+    }
+
     public PhieuNhap(PhieuNhap pn) {
         this.maPN = pn.maPN;
         this.ngayLap = pn.ngayLap;
         this.tongTien = pn.tongTien;
         this.maNCC = pn.maNCC;
         this.maNV = pn.maNV;
+    }
+
+    public void setMaNCC(NhaCungCap maNCC) {
+        this.maNCC = maNCC;
+    }
+
+    public void setMaNV(NhanVien maNV) {
+        this.maNV = maNV;
     }
 
     public String getMaPN() {
@@ -74,7 +88,7 @@ public class PhieuNhap {
         this.maNV = maNV;
     }
 
-    public void nhap() {
+    public void nhap(DanhSachNhaCungCap dsncc, DanhSachNhanVien dsnv) {
         Scanner sc = new Scanner(System.in);
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -83,21 +97,37 @@ public class PhieuNhap {
         System.out.print("Nhap ngay lap: ");
         String nl = sc.nextLine();
         ngayLap = LocalDate.parse(nl, f);
-        System.out.print("Nhap tong tien: ");
-        tongTien = sc.nextDouble();
-        sc.nextLine();
 
-        maNCC = new NhaCungCap();
-        System.out.print("Nhap ma nha cung cap: ");
-        maNCC.setMaNCC(sc.nextLine());
+        NhaCungCap ncc;
+        do {
+            System.out.print("Nhap ma nha cung cap: ");
+            String ma = sc.nextLine();
+            ncc = dsncc.layNCC(ma);
+            if (ncc == null) {
+                System.out.println("Ma nha cung cap khong ton tai, vui long nhap lai!");
+            }
+        } while (ncc == null);
+        this.maNCC = ncc;
 
-        maNV = new NhanVien();
-        System.out.print("Nhap ma nhan vien: ");
-        maNV.setMaNV(sc.nextLine());
+        NhanVien nv;
+        do {
+            System.out.print("Nhap ma nhan vien: ");
+            String ma = sc.nextLine();
+            nv = dsnv.layNV(ma);
+            if (nv == null) {
+                System.out.println("Ma nhan vien khong ton tai, vui long nhap lai!");
+            }
+        } while (nv == null);
+        this.maNV = nv;
+    }
+
+    public void CapNhatTongTien(DanhSachChiTietPhieuNhap dsct) {
+        this.tongTien = dsct.tinhTongTienTheoMaPN(this.maPN);
     }
 
     public void xuat() {
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.printf("%-15s %-15s", maPN, ngayLap.format(f), tongTien, maNCC.getMaNCC(), maNV.getMaNV());
+        System.out.printf("| %-20s | %-15s | %-15.2f | %-20s | %-15s |\n", maPN, ngayLap.format(f), tongTien,
+                maNCC.getMaNCC(), maNV.getMaNV());
     }
 }

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -15,31 +16,35 @@ import src.model.sach.TacGia;
 
 public class DanhSachSach {
     private int n;
-    private Sach[] s;
+    private Sach[] dss;
+    private DanhSachTacGia dstg;
+    private DanhSachNhaXuatBan dsnxb;
 
     public DanhSachSach() {
         n = 0;
-        s = null;
+        dss = new Sach[0];
+        dstg = new DanhSachTacGia();
+        dsnxb = new DanhSachNhaXuatBan();
     }
 
-    // Kiểm tra mã sách có trùng không
-    public boolean kiemTraMaSach(String maSach, int soLuongHienTai) {
-        for (int i = 0; i < soLuongHienTai; i++) {
-            if (s[i].getMaSach().equalsIgnoreCase(maSach)) {
+    // kiểm tra mã trùng nhau
+    public boolean kiemTraMaSach(String maSach) {
+        for (int i = 0; i < n; i++) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
                 return true;
             }
         }
         return false;
     }
 
-    // Nhập sách
+    // nhập
     public void nhapSach() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhap so luong sach: ");
         n = sc.nextInt();
         sc.nextLine();
 
-        s = new Sach[n];
+        dss = new Sach[n];
 
         for (int i = 0; i < n; i++) {
             System.out.println("----- Nhap thong tin sach thu " + (i + 1) + " -----");
@@ -56,44 +61,45 @@ public class DanhSachSach {
             } while (lc != 1 && lc != 2);
 
             if (lc == 1) {
-                s[i] = new SachGiaoKhoa();
+                dss[i] = new SachGiaoKhoa();
             } else {
-                s[i] = new SachThamKhao();
+                dss[i] = new SachThamKhao();
             }
 
             String maSach;
             do {
                 System.out.print("Nhap ma sach: ");
                 maSach = sc.nextLine();
-                if (kiemTraMaSach(maSach, i)) {
+                if (kiemTraMaSach(maSach)) {
                     System.out.println("Ma sach da ton tai, vui long nhap lai!");
                 }
-            } while (kiemTraMaSach(maSach, i));
+            } while (kiemTraMaSach(maSach));
 
-            s[i].setMaSach(maSach);
+            dss[i].setMaSach(maSach);
 
-            s[i].nhapKhongMa();
+            dss[i].nhapKhongMa(dstg, dsnxb);
         }
     }
 
-    // Xuất danh sách sách
+    // xuất
     public void xuatSach() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
             return;
         }
 
-        System.out.println("----- Danh sach sach -----");
+        System.out.println("========== DANH SACH SACH ==========");
         System.out.printf(
-                "| %-15s | %-20s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |\n",
+                "| %-10s | %-20s | %-10s | %-12s | %-14s | %-10s | %-10s | %-15s | %-5s | %-10s | %-12s | %-12s |\n",
                 "Ma sach", "Ten sach", "The loai", "Nam xuat ban", "Don gia ban", "So luong", "Ma tac gia",
                 "Ma nha xuat ban", "Lop", "Mon hoc", "Linh vuc", "Trinh do");
         for (int i = 0; i < n; i++) {
-            s[i].xuat();
+            dss[i].xuat();
         }
+        System.out.println("====================================");
     }
 
-    // Thêm sách vào danh sách
+    // thêm
     public void themSach() {
         Scanner sc = new Scanner(System.in);
         int lc;
@@ -108,31 +114,30 @@ public class DanhSachSach {
             }
         } while (lc != 1 && lc != 2);
 
-        Sach x;
+        Sach s;
         if (lc == 1) {
-            x = new SachGiaoKhoa();
+            s = new SachGiaoKhoa();
         } else {
-            x = new SachThamKhao();
+            s = new SachThamKhao();
         }
 
         String maSach;
         do {
             System.out.print("Nhap ma sach: ");
             maSach = sc.nextLine();
-            if (kiemTraMaSach(maSach, n)) {
+            if (kiemTraMaSach(maSach)) {
                 System.out.println("Ma sach da ton tai, vui long nhap lai!");
             }
-        } while (kiemTraMaSach(maSach, n));
-        x.setMaSach(maSach);
+        } while (kiemTraMaSach(maSach));
+        s.setMaSach(maSach);
+        s.nhapKhongMa(dstg, dsnxb);
 
-        x.nhapKhongMa();
-
-        s = Arrays.copyOf(s, n + 1);
-        s[n] = x;
+        dss = Arrays.copyOf(dss, n + 1);
+        dss[n] = s;
         n++;
     }
 
-    // Hàm xóa sách theo mã
+    // xóa theo mã
     public void xoaSachTheoMa() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
@@ -145,7 +150,7 @@ public class DanhSachSach {
 
         int viTri = -1;
         for (int i = 0; i < n; i++) {
-            if (s[i].getMaSach().equalsIgnoreCase(maSach)) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
                 viTri = i;
                 break;
             }
@@ -157,14 +162,14 @@ public class DanhSachSach {
         }
 
         for (int i = viTri; i < n - 1; i++) {
-            s[i] = s[i + 1];
+            dss[i] = dss[i + 1];
         }
 
         n--;
-        s = Arrays.copyOf(s, n);
+        dss = Arrays.copyOf(dss, n);
     }
 
-    // Sửa thông tin sách tại 1 trường bất kì
+    // sửa thông tin sách tại 1 trường
     public void suaSachTaiTruong() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
@@ -177,7 +182,7 @@ public class DanhSachSach {
 
         int viTri = -1;
         for (int i = 0; i < n; i++) {
-            if (s[i].getMaSach().equalsIgnoreCase(maSach)) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
                 viTri = i;
                 break;
             }
@@ -191,15 +196,16 @@ public class DanhSachSach {
         int lc;
         do {
 
-            System.out.println("1. Ten Sach \n2. The loai \n3. Nam xuat ban \n4. Don gia \n5.So luong");
-
-            if (s[viTri] instanceof SachGiaoKhoa) {
+            System.out.println("========== SUA THONG TIN SACH CO MA " + maSach + " ==========");
+            System.out.println("1. Ten Sach \n2. The loai \n3. Nam xuat ban \n4. Don gia \n5. So luong");
+            if (dss[viTri] instanceof SachGiaoKhoa) {
                 System.out.println("6. Lop \n7. Mon hoc");
-            } else if (s[viTri] instanceof SachThamKhao) {
+            } else if (dss[viTri] instanceof SachThamKhao) {
                 System.out.println("6. Linh vuc \n7. Trinh do");
             }
 
-            System.out.println("0. Thoat");
+            System.out.println("0. Thoat!");
+            System.out.println("===================================================");
             System.out.print("Nhap lua chon: ");
             lc = sc.nextInt();
             sc.nextLine();
@@ -207,40 +213,43 @@ public class DanhSachSach {
             switch (lc) {
                 case 1:
                     System.out.print("Nhap ten sach moi: ");
-                    s[viTri].setTenSach(sc.nextLine());
+                    dss[viTri].setTenSach(sc.nextLine());
                     break;
                 case 2:
                     System.out.print("Nhap the loai moi: ");
-                    s[viTri].setTheLoai(sc.nextLine());
+                    dss[viTri].setTheLoai(sc.nextLine());
                     break;
                 case 3:
                     System.out.print("Nhap nam xuat ban moi: ");
-                    s[viTri].setNamXuatBan(sc.nextInt());
+                    dss[viTri].setNamXuatBan(sc.nextInt());
+                    sc.nextLine();
                     break;
                 case 4:
                     System.out.print("Nhap don gia moi: ");
-                    s[viTri].setDonGia(sc.nextInt());
+                    dss[viTri].setDonGia(sc.nextInt());
+                    sc.nextLine();
                     break;
                 case 5:
                     System.out.print("Nhap so luong moi: ");
-                    s[viTri].setSoLuong(sc.nextInt());
+                    dss[viTri].setSoLuong(sc.nextInt());
+                    sc.nextLine();
                     break;
                 case 6:
-                    if (s[viTri] instanceof SachGiaoKhoa) {
+                    if (dss[viTri] instanceof SachGiaoKhoa) {
                         System.out.print("Nhap lop moi: ");
-                        ((SachGiaoKhoa) s[viTri]).setLop(sc.nextLine());
-                    } else if (s[viTri] instanceof SachThamKhao) {
+                        ((SachGiaoKhoa) dss[viTri]).setLop(sc.nextLine());
+                    } else if (dss[viTri] instanceof SachThamKhao) {
                         System.out.print("Nhap linh vuc moi: ");
-                        ((SachThamKhao) s[viTri]).setLinhVuc(sc.nextLine());
+                        ((SachThamKhao) dss[viTri]).setLinhVuc(sc.nextLine());
                     }
                     break;
                 case 7:
-                    if (s[viTri] instanceof SachGiaoKhoa) {
+                    if (dss[viTri] instanceof SachGiaoKhoa) {
                         System.out.print("Nhap mon hoc moi: ");
-                        ((SachGiaoKhoa) s[viTri]).setMonHoc(sc.nextLine());
-                    } else if (s[viTri] instanceof SachThamKhao) {
+                        ((SachGiaoKhoa) dss[viTri]).setMonHoc(sc.nextLine());
+                    } else if (dss[viTri] instanceof SachThamKhao) {
                         System.out.print("Nhap trinh do moi: ");
-                        ((SachThamKhao) s[viTri]).setTrinhDo(sc.nextLine());
+                        ((SachThamKhao) dss[viTri]).setTrinhDo(sc.nextLine());
                     }
                     break;
                 case 0:
@@ -253,8 +262,7 @@ public class DanhSachSach {
         } while (lc != 0);
     }
 
-    // === Tìm kiếm ===
-    // Tìm kiếm sách theo mã
+    // tìm kiếm sách theo mã
     public void timKiemSachTheoMa() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
@@ -267,9 +275,13 @@ public class DanhSachSach {
 
         boolean timThay = false;
 
+        System.out.printf(
+                "| %-10s | %-20s | %-10s | %-12s | %-14s | %-10s | %-10s | %-15s | %-5s | %-10s | %-12s | %-12s |\n",
+                "Ma sach", "Ten sach", "The loai", "Nam xuat ban", "Don gia ban", "So luong", "Ma tac gia",
+                "Ma nha xuat ban", "Lop", "Mon hoc", "Linh vuc", "Trinh do");
         for (int i = 0; i < n; i++) {
-            if (s[i].getMaSach().equalsIgnoreCase(maSach)) {
-                s[i].xuat();
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
+                dss[i].xuat();
                 timThay = true;
             }
         }
@@ -279,7 +291,7 @@ public class DanhSachSach {
         }
     }
 
-    // Tìm kiếm sách theo tên
+    // tìm kiếm sách theo tên
     public void timKiemSachTheoTen() {
         if (n == 0) {
             System.out.println("Danh sach sach rong!");
@@ -292,9 +304,13 @@ public class DanhSachSach {
 
         boolean timThay = false;
 
+        System.out.printf(
+                "| %-10s | %-20s | %-10s | %-12s | %-14s | %-10s | %-10s | %-15s | %-5s | %-10s | %-12s | %-12s |\n",
+                "Ma sach", "Ten sach", "The loai", "Nam xuat ban", "Don gia ban", "So luong", "Ma tac gia",
+                "Ma nha xuat ban", "Lop", "Mon hoc", "Linh vuc", "Trinh do");
         for (int i = 0; i < n; i++) {
-            if (s[i].getTenSach().equalsIgnoreCase(tenSach)) {
-                s[i].xuat();
+            if (dss[i].getTenSach().equalsIgnoreCase(tenSach)) {
+                dss[i].xuat();
                 timThay = true;
             }
         }
@@ -304,71 +320,49 @@ public class DanhSachSach {
         }
     }
 
-    // === Thống kê ===
-    // Thống kê số lượng của từng loại sách
+    // thống kê tổng sách giáo khoa và sách tham khảo
     public int[] thongKeTongSoSach() {
-        int[] tk = new int[2];
-
-        if (n == 0)
-            return tk;
-
-        for (int i = 0; i < n; i++) {
-            if (s[i] instanceof SachGiaoKhoa) {
-                tk[0]++;
-            } else if (s[i] instanceof SachThamKhao) {
-                tk[1]++;
-            }
-        }
-        return tk;
-    }
-
-    public int[] thongKeTongSoSach1() {
         int sgk = 0;
         int stk = 0;
 
         for (int i = 0; i < n; i++) {
-            if (s[i] instanceof SachGiaoKhoa)
+            if (dss[i] instanceof SachGiaoKhoa) {
                 sgk++;
-            else if (s[i] instanceof SachThamKhao)
+            } else if (dss[i] instanceof SachThamKhao) {
                 stk++;
+            }
         }
-
         return new int[] { sgk, stk };
     }
 
-    // Thống kê tổng số lượng tồn kho của sách
+    // thống kê số lượng sách tồn kho
     public int[] thongKeSoLuongSach() {
         int tong = 0;
         for (int i = 0; i < n; i++) {
-            tong += s[i].getSoLuong();
+            tong += dss[i].getSoLuong();
         }
         return new int[] { tong };
     }
 
-    // Thống kê tổng số lượng tồn kho theo loại
-
-    // Thống kê tổng giá trị tồn kho (đơn giá * số lượng)
-
-    // === Đọc - Ghi file ===
-    // Đọc file
+    // đọc file
     public void docFile() {
         try {
-            FileReader fr = new FileReader("src/data/DanhSachSach.txt");
-            BufferedReader br = new BufferedReader(fr);
+            dstg.docFile();
+            dsnxb.docFile();
 
+            BufferedReader br = new BufferedReader(new FileReader("src/data/DanhSachSach.txt"));
             String line;
+
             int count = 0;
             while ((line = br.readLine()) != null) {
                 count++;
             }
             br.close();
-            fr.close();
 
-            s = new Sach[count];
+            dss = new Sach[count];
             n = 0;
 
-            FileReader fri = new FileReader("src/data/DanhSachSach.txt");
-            BufferedReader bri = new BufferedReader(fri);
+            BufferedReader bri = new BufferedReader(new FileReader("src/data/DanhSachSach.txt"));
 
             while ((line = bri.readLine()) != null) {
                 String data[] = line.split(",");
@@ -386,74 +380,138 @@ public class DanhSachSach {
                     String thuocTinh1 = data[9].trim(); // lớp or lĩnh vực
                     String thuocTinh2 = data[10].trim(); // môn học or trình độ
 
-                    TacGia tacGia = new TacGia();
-                    tacGia.setMaTG(maTG);
-                    NhaXuatBan nhaXuatBan = new NhaXuatBan();
-                    nhaXuatBan.setMaNXB(maNXB);
+                    TacGia tg = new TacGia();
+                    tg.setMaTG(maTG);
+
+                    NhaXuatBan nxb = new NhaXuatBan();
+                    nxb.setMaNXB(maNXB);
 
                     if (loai.equalsIgnoreCase("Giao khoa")) {
-                        s[n] = new SachGiaoKhoa(maSach, tenSach, theLoai, namXuatBan, donGia, soLuong,
-                                tacGia, nhaXuatBan, thuocTinh1, thuocTinh2);
+                        dss[n] = new SachGiaoKhoa(maSach, tenSach, theLoai, namXuatBan, donGia, soLuong,
+                                tg, nxb, thuocTinh1, thuocTinh2);
                     } else if (loai.equalsIgnoreCase("Tham khao")) {
-                        s[n] = new SachThamKhao(maSach, tenSach, theLoai, namXuatBan, donGia, soLuong,
-                                tacGia, nhaXuatBan, thuocTinh1, thuocTinh2);
+                        dss[n] = new SachThamKhao(maSach, tenSach, theLoai, namXuatBan, donGia, soLuong,
+                                tg, nxb, thuocTinh1, thuocTinh2);
                     }
                     n++;
                 }
             }
             bri.close();
-            fri.close();
-            System.out.println("Doc file thanh cong!");
-        } catch (Exception e) {
+            System.out.println("Doc file Sach thanh cong!");
+        } catch (IOException e) {
             System.out.println("Loi doc file: " + e.getMessage());
-            e.printStackTrace();
-
         }
     }
 
-    // Ghi file
+    // ghi file
     public void ghiFile() {
         try {
-            FileWriter fw = new FileWriter("src/data/DanhSachSach.txt");
-            BufferedWriter bw = new BufferedWriter(fw);
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/data/DanhSachSach.txt"));
 
             for (int i = 0; i < n; i++) {
-                if (s[i] instanceof SachGiaoKhoa) {
-                    SachGiaoKhoa sgk = (SachGiaoKhoa) s[i];
+                if (dss[i] instanceof SachGiaoKhoa) {
+                    SachGiaoKhoa sgk = (SachGiaoKhoa) dss[i];
                     bw.write("Giao khoa," +
-                            sgk.getMaSach() + "," +
-                            sgk.getTenSach() + "," +
-                            sgk.getTheLoai() + "," +
-                            sgk.getNamXuatBan() + "," +
-                            sgk.getDonGia() + "," +
-                            sgk.getSoLuong() + "," +
-                            sgk.getTacGia().getMaTG() + "," +
-                            sgk.getNhaXuatBan().getMaNXB() + "," +
-                            sgk.getLop() + "," +
-                            sgk.getMonHoc());
-                } else if (s[i] instanceof SachThamKhao) {
-                    SachThamKhao stk = (SachThamKhao) s[i];
+                            sgk.getMaSach() + "," + sgk.getTenSach() + "," +
+                            sgk.getTheLoai() + "," + sgk.getNamXuatBan() + "," +
+                            sgk.getDonGia() + "," + sgk.getSoLuong() + "," +
+                            sgk.getTacGia().getMaTG() + "," + sgk.getNhaXuatBan().getMaNXB() + "," +
+                            sgk.getLop() + "," + sgk.getMonHoc());
+                } else if (dss[i] instanceof SachThamKhao) {
+                    SachThamKhao stk = (SachThamKhao) dss[i];
                     bw.write("Tham khao," +
-                            stk.getMaSach() + "," +
-                            stk.getTenSach() + "," +
-                            stk.getTheLoai() + "," +
-                            stk.getNamXuatBan() + "," +
-                            stk.getDonGia() + "," +
-                            stk.getSoLuong() + "," +
-                            stk.getTacGia().getMaTG() + "," +
-                            stk.getNhaXuatBan().getMaNXB() + "," +
-                            stk.getLinhVuc() + "," +
-                            stk.getTrinhDo());
+                            stk.getMaSach() + "," + stk.getTenSach() + "," +
+                            stk.getTheLoai() + "," + stk.getNamXuatBan() + "," +
+                            stk.getDonGia() + "," + stk.getSoLuong() + "," +
+                            stk.getTacGia().getMaTG() + "," + stk.getNhaXuatBan().getMaNXB() + "," +
+                            stk.getLinhVuc() + "," + stk.getTrinhDo());
                 }
                 bw.newLine();
             }
             bw.close();
-            fw.close();
             System.out.println("Ghi file thanh cong!");
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Loi ghi file" + e.getMessage());
-            e.printStackTrace();
         }
     }
 
+    // vỹ thêm
+    public Sach KiemTraMaSach(String maSach) {
+        for (int i = 0; i < n; i++) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach))
+                return dss[i];
+        }
+        return null;
+    }
+
+    public void capNhatSoLuongSach(String maSach, int soLuongMua) {
+        if (n < soLuongMua)
+            System.out.println("Khong du so luong sach!");
+        else
+            n -= soLuongMua;
+    }
+
+    public void tangSoLuongSach(String maSach, int soLuongNhap) {
+        int soLuongSach;
+        for (int i = 0; i < n; i++) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
+                soLuongSach = dss[i].getSoLuong();
+                int kq = soLuongSach + soLuongNhap;
+                dss[i].setSoLuong(kq);
+            }
+        }
+    }
+
+    public void giamSoLuongSach(String maSach, int soLuongMua) {
+        int soLuongSach;
+        for (int i = 0; i < n; i++) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
+                if (dss[i].getSoLuong() < soLuongMua) {
+                    System.out.println("Khong du so luon sach!");
+                } else {
+                    soLuongSach = dss[i].getSoLuong();
+                    int kq = soLuongSach - soLuongMua;
+                    dss[i].setSoLuong(kq);
+                }
+            }
+        }
+    }
+
+    public boolean kiemTraSoLuongSach(String maSach, int soLuongMua) {
+        for (int i = 0; i < n; i++) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
+                if (dss[i].getSoLuong() < soLuongMua)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public double layDonGiaTheoMa(String maSach) {
+        double donGia = 0;
+        for (int i = 0; i < n; i++) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
+                donGia = dss[i].getDonGia();
+            }
+        }
+        return donGia;
+    }
+    //
+
+    public Sach laySach(String maSach) {
+        for (int i = 0; i < n; i++) {
+            if (dss[i].getMaSach().equalsIgnoreCase(maSach)) {
+                return dss[i];
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        DanhSachSach dss = new DanhSachSach();
+        dss.docFile();
+        dss.xuatSach();
+        dss.themSach();
+        dss.xuatSach();
+    }
 }

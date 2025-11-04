@@ -2,7 +2,10 @@ package src.model.sach;
 
 import java.util.Scanner;
 
-public abstract class Sach {
+import src.manager.DanhSachNhaXuatBan;
+import src.manager.DanhSachTacGia;
+
+public class Sach {
     protected String maSach;
     protected String tenSach;
     protected String theLoai;
@@ -39,6 +42,17 @@ public abstract class Sach {
         this.maTG = s.maTG;
         this.maNXB = s.maNXB;
     }
+
+    // thắng thêm
+    public Sach(String maSach) {
+        this.maSach = maSach;
+    }
+
+    // @Override
+    // public String toString() {
+    // return maSach;
+    // }
+    //
 
     public String getMaSach() {
         return maSach;
@@ -104,32 +118,14 @@ public abstract class Sach {
         this.maNXB = maNXB;
     }
 
-    public void nhap() {
+    public void nhap(DanhSachTacGia dstg, DanhSachNhaXuatBan dsnxb) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhap ma sach: ");
         maSach = sc.nextLine();
-        System.out.print("Nhap ten sach: ");
-        tenSach = sc.nextLine();
-        System.out.print("Nhap the loai: ");
-        theLoai = sc.nextLine();
-        System.out.print("Nhap nam xuat ban: ");
-        namXuatBan = sc.nextInt();
-        System.out.print("Nhap don gia: ");
-        donGia = sc.nextInt();
-        System.out.print("Nhap so luong: ");
-        soLuong = sc.nextInt();
-        sc.nextLine();
-
-        maTG = new TacGia();
-        System.out.print("Nhap ma tac gia: ");
-        maTG.setMaTG(sc.nextLine());
-
-        maNXB = new NhaXuatBan();
-        System.out.print("Nhap ma nha xuat ban: ");
-        maNXB.setMaNXB(sc.nextLine());
+        nhapKhongMa(dstg, dsnxb);
     }
 
-    public void nhapKhongMa() {
+    public void nhapKhongMa(DanhSachTacGia dstg, DanhSachNhaXuatBan dsnxb) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Nhap ten sach: ");
         tenSach = sc.nextLine();
@@ -143,17 +139,29 @@ public abstract class Sach {
         soLuong = sc.nextInt();
         sc.nextLine();
 
-        maTG = new TacGia();
-        System.out.print("Nhap ma tac gia: ");
-        maTG.setMaTG(sc.nextLine());
+        TacGia tg = null;
+        do {
+            System.out.print("Nhap ma tac gia: ");
+            String ma = sc.nextLine();
+            tg = dstg.layTacGia(ma);
+            if (tg == null)
+                System.out.println("Ma tac gia khong ton tai, vui long nhap lai!");
+        } while (tg == null);
+        this.maTG = tg;
 
-        maNXB = new NhaXuatBan();
-        System.out.print("Nhap ma nha xuat ban: ");
-        maNXB.setMaNXB(sc.nextLine());
+        NhaXuatBan nxb = null;
+        do {
+            System.out.print("Nhap ma nha xuat ban: ");
+            String ma = sc.nextLine();
+            nxb = dsnxb.layNXB(ma);
+            if (nxb == null)
+                System.out.println("Ma nha xuat ban khong ton tai, vui long nhap lai!");
+        } while (nxb == null);
+        this.maNXB = nxb;
     }
 
     public void xuat() {
-        System.out.printf("| %-15s | %-20s | %-15s | %-15s | %-15s | %-15s | %-15s | %-15s |", maSach, tenSach, theLoai,
+        System.out.printf("| %-10s | %-20s | %-10s | %-12s | %-14s | %-10s | %-10s | %-15s |", maSach, tenSach, theLoai,
                 namXuatBan, donGia, soLuong, maTG.getMaTG(), maNXB.getMaNXB());
     }
 

@@ -8,11 +8,9 @@ public class ChiTietPhieuNhap {
     private Sach maSach;
     private int soLuong;
     private double donGia;
-    // thanhTien = donGia * soLuong
+    private double thanhTien;
 
     public ChiTietPhieuNhap() {
-        maPN = new PhieuNhap();
-        maSach = null;
     }
 
     public ChiTietPhieuNhap(PhieuNhap maPN, Sach maSach, int soLuong, double donGia) {
@@ -20,6 +18,7 @@ public class ChiTietPhieuNhap {
         this.maSach = maSach;
         this.soLuong = soLuong;
         this.donGia = donGia;
+        this.thanhTien = donGia * soLuong;
     }
 
     public ChiTietPhieuNhap(ChiTietPhieuNhap ctpn) {
@@ -27,6 +26,7 @@ public class ChiTietPhieuNhap {
         this.maSach = ctpn.maSach;
         this.soLuong = ctpn.soLuong;
         this.donGia = ctpn.donGia;
+        this.thanhTien = ctpn.donGia * ctpn.soLuong;
     }
 
     public PhieuNhap getPhieuNhap() {
@@ -51,6 +51,7 @@ public class ChiTietPhieuNhap {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+        this.thanhTien = this.donGia * soLuong;
     }
 
     public double getDonGia() {
@@ -59,30 +60,32 @@ public class ChiTietPhieuNhap {
 
     public void setDonGia(double donGia) {
         this.donGia = donGia;
+        this.thanhTien = donGia * this.soLuong;
     }
 
-    public void nhap() {
+    public double getThanhTien() {
+        return thanhTien;
+    }
+
+    public void setThanhTien(double thanhTien) {
+        this.thanhTien = thanhTien;
+    }
+
+    public void nhap(PhieuNhap pn, Sach sach) {
         Scanner sc = new Scanner(System.in);
-
-        maPN = new PhieuNhap();
-        System.out.print("Nhap ma phieu nhap: ");
-        maPN.setMaPN(sc.nextLine());
-
-        System.out.print("Nhap ma sach: ");
-        maSach.setMaSach(sc.nextLine());
-
-        System.out.print("Nhap don gia: ");
-        donGia = sc.nextDouble();
+        this.maPN = pn;
+        this.maSach = sach;
         System.out.print("Nhap so luong: ");
         soLuong = sc.nextInt();
+        System.out.print("Nhap don gia: ");
+        donGia = sc.nextDouble();
+
+        this.thanhTien = this.donGia * this.soLuong;
     }
 
     public void xuat() {
-        System.out.printf("MaPN: %s | MaSach: %s | SoLuong: %d | DonGia: %.2f | ThanhTien: %.2f\n",
-                maPN.getMaPN(), maSach.getMaSach(), soLuong, donGia, thanhTien());
-    }
-
-    public double thanhTien() {
-        return donGia * soLuong;
+        System.out.printf("| %-10s | %-10s | %-10s | %-15.2f | %-15.2f |\n", maPN.getMaPN(), maSach.getMaSach(),
+                soLuong,
+                donGia, thanhTien);
     }
 }

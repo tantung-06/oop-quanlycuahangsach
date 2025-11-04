@@ -11,9 +11,11 @@ import java.util.Arrays;
 import src.model.sach.NhaXuatBan;
 
 public class DanhSachNhaXuatBan {
+    private int soLuongNXB;
     private NhaXuatBan[] dsNXB;
 
     public DanhSachNhaXuatBan() {
+        soLuongNXB = 0;
         dsNXB = new NhaXuatBan[0];
     }
 
@@ -33,107 +35,43 @@ public class DanhSachNhaXuatBan {
         dsNXB = temp;
     }
 
-    // nhap, xuat, them/xoa, sort by name, tim kiem
-
-    public void chonChucNang() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-        int choice;
-        while (true) {
-            System.out.println("""
-                    Chon chuc nang can thuc hien!
-                    1. Khoi tao danh sach
-                    2. Them nha xuat ban
-                    3. Xoa nha xuat ban
-                    4. Sua thong tin nha xuat ban
-                    5. Xuat danh sach nha xuat ban
-                    6. Tim kiem nha xuat ban
-                    7. Sap xep theo ten
-                    8. Lay du lieu tu file
-                    9. Thong ke thanh pho
-                    0. Thoat chuong trinh (Tu dong ghi de du lieu vao file)""");
-            choice = Integer.parseInt(in.readLine());
-            switch (choice) {
-                case 1:
-                    khoiTaoDS();
-                    break;
-                case 2:
-                    themNXB();
-                    break;
-                case 3:
-                    xoaNXB();
-                    break;
-                case 4:
-                    suaThongTin();
-                    break;
-                case 5:
-                    xuatDS();
-                    break;
-                case 6:
-                    timKiemNXB();
-                    break;
-                case 7:
-                    sortByTen();
-                    break;
-                case 8:
-                    docFile();
-                    break;
-                case 9:
-                    thongKeThanhPho();
-                    break;
-                case 0: {
-                    ghiFile();
-                    return;
-                }
-                default:
-                    System.out.println("Cu phap khong dung, hay nhap lai!");
-                    break;
-            }
-        }
-    }
-
-    public void docFile() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        if (dsNXB != null && dsNXB.length > 0) {
-            System.out.println("Danh sach nha xuat ban da duoc khoi tao!");
-
-            System.out.print("Co muon lay lai du lieu tu file (y/n): ");
-            char choice;
-            choice = in.readLine().charAt(0);
-            if (choice != 'y' || choice != 'Y') {
-                return;
-            }
-        }
-
+    public void docFile() {
         try {
-            FileReader fr = new FileReader("DanhSachNhaXuatBan.txt");
-            in = new BufferedReader(fr);
+            dsNXB = new NhaXuatBan[0];
+            soLuongNXB = 0;
+
+            BufferedReader br = new BufferedReader(new FileReader("src/data/DanhSachNhaXuatBan.txt"));
 
             String line;
-            while ((line = in.readLine()) != null) {// kiểm tra còn dữ liệu
+            while ((line = br.readLine()) != null) {
                 line = line.trim();
                 if (line.isEmpty())
-                    continue; // bỏ qua dòng trống
+                    continue;
 
-                String[] temp = line.split(",");
-                if (temp.length == 5) { // kiểm tra có đúng format
+                String[] temp = line.split("\\s*,\\s*");
+                if (temp.length != 3) {
+                    System.out.println("Sai format NXB: " + line);
+                    continue;
+                }
+
+                try {
                     NhaXuatBan nxb = new NhaXuatBan();
-                    nxb.setMaNXB(temp[0].trim());
-                    nxb.setTenNXB(temp[1].trim());
-                    String diaChi = temp[2].trim() + ", " + temp[3].trim() + ", " + temp[4].trim();
-                    nxb.setDiaChi(diaChi);
+                    nxb.setMaNXB(temp[0]);
+                    nxb.setTenNXB(temp[1]);
+                    nxb.setDiaChi(temp[2]);
 
                     dsNXB = Arrays.copyOf(dsNXB, dsNXB.length + 1);
                     dsNXB[dsNXB.length - 1] = nxb;
-                } else {
-                    System.out.println("Sai format!");
+                    soLuongNXB++;
+                } catch (Exception e) {
+                    System.out.println("Loi du lieu NXB: " + line);
                 }
-
             }
-            in.close();
-            fr.close();
+
+            br.close();
+            System.out.println("Doc file NXB thanh cong!");
         } catch (IOException e) {
-            System.out.println("Loi doc file: " + e.getMessage());
+            System.out.println("Loi doc file NXB: " + e.getMessage());
         }
     }
 
@@ -152,7 +90,7 @@ public class DanhSachNhaXuatBan {
             return;
         }
         try {
-            FileWriter fw = new FileWriter("DanhSachNhaXuatBan.txt");
+            FileWriter fw = new FileWriter("src/data/DanhSachNhaXuatBan.txt");
             BufferedWriter out = new BufferedWriter(fw);
 
             for (int i = 0; i < dsNXB.length; i++) {
@@ -170,7 +108,7 @@ public class DanhSachNhaXuatBan {
 
     public boolean kiemTraMaSoNXB(String temp, int locate) {
         for (int i = 0; i < dsNXB.length; i++) {
-            if (dsNXB[i] != null && temp.equals(dsNXB[i].getMaNXB()) && i != locate) {
+            if (dsNXB[i] != null && temp.equalsIgnoreCase(dsNXB[i].getMaNXB()) && i != locate) {
                 return true;
             }
         }
@@ -196,7 +134,7 @@ public class DanhSachNhaXuatBan {
 
         for (int i = 0; i < soLuong; i++) {
             System.out.print("Nha xuat ban " + (i + 1) + " - ");
-            dsNXB[i] = new NhaXuatBan(); // khoi tao doi tuong
+            dsNXB[i] = new NhaXuatBan();
             dsNXB[i].nhap();
             while (kiemTraMaSoNXB(dsNXB[i].getMaNXB(), i)) {
                 System.out.println("Ma so nhan vien da trung! Hay nhap lai!");
@@ -221,12 +159,10 @@ public class DanhSachNhaXuatBan {
             return;
         }
         System.out.println("DANH SACH NHA XUAT BAN!");
-        // In tieu de
         System.out.printf("%-10s %-30s %-30s\n",
                 "Ma NXB", "Ten NXB", "Dia Chi");
         System.out.println("--------------------------------------------------------------------------");
 
-        // In danh sach
         for (NhaXuatBan temp : dsNXB) {
             System.out.printf("%-10s %-30s %-30s\n",
                     temp.getMaNXB(), temp.getTenNXB(), temp.getDiaChi());
@@ -252,7 +188,7 @@ public class DanhSachNhaXuatBan {
         dsNXB = Arrays.copyOf(dsNXB, dsNXB.length + soLuong);
         for (int i = dsNXB.length - soLuong; i < dsNXB.length; i++) {
             System.out.print("Nguoi thu " + (i + 1) + " - ");
-            dsNXB[i] = new NhaXuatBan(); // khoi tao doi tuong
+            dsNXB[i] = new NhaXuatBan();
             dsNXB[i].nhap();
             while (kiemTraMaSoNXB(dsNXB[i].getMaNXB(), i)) {
                 System.out.println("Ma so nhan vien da trung! Hay nhap lai!");
@@ -286,7 +222,7 @@ public class DanhSachNhaXuatBan {
         String temp = in.readLine();
         int check = -1;
         for (int i = 0; i < dsNXB.length; i++) {
-            if (temp.equals(dsNXB[i].getMaNXB())) {
+            if (temp.equalsIgnoreCase(dsNXB[i].getMaNXB())) {
                 check = i;
                 break;
             }
@@ -320,7 +256,7 @@ public class DanhSachNhaXuatBan {
         String temp = in.readLine();
         int check = -1;
         for (int i = 0; i < dsNXB.length; i++) {
-            if (temp.equals(dsNXB[i].getMaNXB())) {
+            if (temp.equalsIgnoreCase(dsNXB[i].getMaNXB())) {
                 check = i;
                 break;
             }
@@ -333,7 +269,7 @@ public class DanhSachNhaXuatBan {
         }
     }
 
-    public void timKiemNXB() throws Exception {
+    public void timKiemNXBTheoMa() throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         if (dsNXB == null || dsNXB.length == 0) {
             System.out.println("Danh sach nha xuat ban chua duoc khoi tao!");
@@ -351,7 +287,7 @@ public class DanhSachNhaXuatBan {
         String temp = in.readLine();
 
         for (int i = 0; i < dsNXB.length; i++) {
-            if (temp.equals(dsNXB[i].getMaNXB())) {
+            if (temp.equalsIgnoreCase(dsNXB[i].getMaNXB())) {
                 dsNXB[i].xuat();
                 return;
             }
@@ -360,7 +296,7 @@ public class DanhSachNhaXuatBan {
         System.out.println("Khong tim thay nha xuat ban can tim!");
     }
 
-    public void sortByTen() throws Exception {
+    public void timKiemNXBTheoTen() throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         if (dsNXB == null || dsNXB.length == 0) {
             System.out.println("Danh sach nha xuat ban chua duoc khoi tao!");
@@ -374,46 +310,17 @@ public class DanhSachNhaXuatBan {
             }
             return;
         }
-        int choice;
-        while (true) {
-            System.out.println("""
-                    Ban muon sap xep theo kieu nao?
-                    1. Sap xep A-z
-                    2. Sap xep a-A
-                    0. Khong sap xep""");
-            choice = Integer.parseInt(in.readLine());
-            if (choice == 1) {
-                for (int i = 0; i < dsNXB.length - 1; i++) {
-                    for (int y = 0; y < dsNXB.length - i - 1; y++) {
-                        if (dsNXB[y].getTenNXB().compareToIgnoreCase(dsNXB[y + 1].getTenNXB()) > 0) { // >0 -> str1 >
-                                                                                                      // str2
-                            NhaXuatBan temp = dsNXB[y];
-                            dsNXB[y] = dsNXB[y + 1];
-                            dsNXB[y + 1] = temp;
-                        }
+        System.out.print("Nhap ten nha xuat ban can tim: ");
+        String temp = in.readLine();
 
-                    }
-                }
+        for (int i = 0; i < dsNXB.length; i++) {
+            if (temp.equalsIgnoreCase(dsNXB[i].getTenNXB())) {
+                dsNXB[i].xuat();
                 return;
-            } else if (choice == 2) {
-                for (int i = 0; i < dsNXB.length - 1; i++) {
-                    for (int y = 0; y < dsNXB.length - i - 1; y++) {
-                        if (dsNXB[y].getTenNXB().compareToIgnoreCase(dsNXB[y + 1].getTenNXB()) < 0) { // <0 -> str1 <
-                                                                                                      // str2
-                            NhaXuatBan temp = dsNXB[y];
-                            dsNXB[y] = dsNXB[y + 1];
-                            dsNXB[y + 1] = temp;
-                        }
-
-                    }
-                }
-                return;
-            } else if (choice == 0) {
-                return;
-            } else {
-                System.out.println("Cu phap khong dung, hay nhap lai!");
             }
         }
+
+        System.out.println("Khong tim thay nha xuat ban can tim!");
     }
 
     public void thongKeThanhPho() throws Exception {
@@ -436,14 +343,37 @@ public class DanhSachNhaXuatBan {
             String[] temp = dsNXB[i].getDiaChi().split(",");
             String thanhPho = temp[temp.length - 1].trim();
 
-            if (thanhPho.equals("TP.HCM"))
+            if (thanhPho.equalsIgnoreCase("TP.HCM"))
                 count1++;
-            else if (thanhPho.equals("Hà Nội"))
+            else if (thanhPho.equalsIgnoreCase("Hà Nội"))
                 count2++;
         }
 
         System.out.println("Tong so nha xuat ban o Ho Chi Minh: " + count1);
         System.out.println("Tong so nha xuat ban o Ha Noi: " + count2);
+    }
+
+    public boolean kiemTraMaNXB(String maNXB) {
+        for (int i = 0; i < soLuongNXB; i++) {
+            if (dsNXB[i].getMaNXB().equalsIgnoreCase(maNXB))
+                return true;
+        }
+        return false;
+    }
+
+    public NhaXuatBan layNXB(String maNXB) {
+        for (int i = 0; i < soLuongNXB; i++) {
+            if (dsNXB[i].getMaNXB().equalsIgnoreCase(maNXB))
+                return dsNXB[i];
+        }
+        return null;
+    }
+
+    public static void main(String[] args) throws Exception {
+        DanhSachNhaXuatBan dsnxb = new DanhSachNhaXuatBan();
+        dsnxb.docFile();
+        dsnxb.xuatDS();
+        System.out.println(dsnxb.layNXB("NXB01"));
     }
 
 }

@@ -25,6 +25,10 @@ public class NhaCungCap {
         this.diaChi = ncc.diaChi;
     }
 
+    public NhaCungCap(String maNCC) {
+        this.maNCC = maNCC;
+    }
+
     public String getMaNCC() {
         return maNCC;
     }

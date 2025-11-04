@@ -11,10 +11,12 @@ import java.util.Arrays;
 import src.model.nhansu.NhanVien;
 
 public class DanhSachNhanVien {
+    private int soLuongNV;
     private NhanVien[] dsNV;
 
     // default
     public DanhSachNhanVien() {
+        soLuongNV = 0;
         dsNV = new NhanVien[0];
     }
 
@@ -32,99 +34,34 @@ public class DanhSachNhanVien {
         return dsNV;
     }
 
-    // co the khong can set?
     public void setDS(NhanVien[] temp) {
         dsNV = temp;
     }
 
-    // nhap, xuat, them/xoa, tim kiem, sap xep theo ten/luong/...
-
-    public void chonChucNang() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-        int choice;
-        while (true) {
-            System.out.println("""
-                    Chon chuc nang can thuc hien!
-                    1. Khoi tao danh sach
-                    2. Them nhan vien
-                    3. Xoa nhan vien
-                    4. Sua thong tin nhan vien
-                    5. Xuat danh sach nhan vien
-                    6. Tim kiem nhan vien
-                    7. Sap xep theo ten
-                    8. Sap xep theo luong
-                    9. Lay du lieu tu file
-                    10. Thong ke luong
-                    0. Thoat chuong trinh (Tu dong ghi de du lieu vao file)""");
-            choice = Integer.parseInt(in.readLine());
-            switch (choice) {
-                case 1:
-                    khoiTaoDS();
-                    break;
-                case 2:
-                    themNV();
-                    break;
-                case 3:
-                    xoaNV();
-                    break;
-                case 4:
-                    suaThongTin();
-                    break;
-                case 5:
-                    xuatDS();
-                    break;
-                case 6:
-                    timKiemNV();
-                    break;
-                case 7:
-                    sortByTen();
-                    break;
-                case 8:
-                    sortByLuong();
-                    break;
-                case 9:
-                    docFile();
-                    break;
-                case 10:
-                    thongKeLuong();
-                    break;
-                case 0: {
-                    ghiFile();
-                    return;
-                }
-                default:
-                    System.out.println("Cu phap khong dung, hay nhap lai!");
-                    break;
+    public boolean KtraMaNV(String manv) {
+        for (int i = 0; i < soLuongNV; i++) {
+            if (manv.equalsIgnoreCase(dsNV[i].getMaNV())) {
+                return true;
             }
         }
+        return false;
     }
 
-    public void docFile() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        if (dsNV != null && dsNV.length > 0) {
-            System.out.println("Danh sach nhan vien da duoc khoi tao!");
-
-            System.out.print("Co muon lay lai du lieu tu file (y/n): ");
-            char choice;
-            choice = in.readLine().charAt(0);
-            if (choice != 'y' || choice != 'Y') {
-                return;
-            }
-        }
-
+    public void docFile() {
         try {
-            FileReader fr = new FileReader("DanhSachNhanVien.txt");
-            in = new BufferedReader(fr);
+            dsNV = new NhanVien[0];
+            soLuongNV = 0;
+
+            BufferedReader br = new BufferedReader(new FileReader("src/data/DanhSachNhanVien.txt"));
 
             String line;
-            while ((line = in.readLine()) != null) {// kiểm tra còn dữ liệu
+            while ((line = br.readLine()) != null) {
                 line = line.trim();
                 if (line.isEmpty())
-                    continue; // bỏ qua dòng trống
+                    continue;
 
                 String[] temp = line.split(",");
-                if (temp.length == 6) { // kiểm tra có đúng format
+                if (temp.length == 6) {
                     NhanVien nv = new NhanVien();
                     nv.setMaNV(temp[0].trim());
                     nv.setHo(temp[1].trim());
@@ -135,13 +72,13 @@ public class DanhSachNhanVien {
 
                     dsNV = Arrays.copyOf(dsNV, dsNV.length + 1);
                     dsNV[dsNV.length - 1] = nv;
+                    soLuongNV++;
                 } else {
                     System.out.println("Sai format!");
                 }
-
             }
-            in.close();
-            fr.close();
+            br.close();
+            System.out.println("Doc file NhanVien thanh cong!");
         } catch (IOException e) {
             System.out.println("Loi doc file: " + e.getMessage());
         }
@@ -163,7 +100,7 @@ public class DanhSachNhanVien {
         }
 
         try {
-            FileWriter fw = new FileWriter("DanhSachNhanVien.txt");
+            FileWriter fw = new FileWriter("src/data/DanhSachNhanVien.txt");
             BufferedWriter out = new BufferedWriter(fw);
 
             for (int i = 0; i < dsNV.length; i++) {
@@ -176,7 +113,7 @@ public class DanhSachNhanVien {
 
             out.close();
             fw.close();
-
+            System.out.println("Ghi file NhanVien thanh cong");
         } catch (IOException e) {
             System.out.println("Loi ghi file: " + e.getMessage());
         }
@@ -184,7 +121,7 @@ public class DanhSachNhanVien {
 
     public boolean kiemTraMaSoNV(String temp, int locate) {
         for (int i = 0; i < dsNV.length; i++) {
-            if (dsNV[i] != null && temp.equals(dsNV[i].getMaNV()) && i != locate) {
+            if (dsNV[i] != null && temp.equalsIgnoreCase(dsNV[i].getMaNV()) && i != locate) {
                 return true;
             }
         }
@@ -240,15 +177,14 @@ public class DanhSachNhanVien {
 
         System.out.println("DANH SACH NHAN VIEN!");
         // In tieu de
-        System.out.printf("%-10s %-20s %-15s %-10s %-15s\n",
-                "Ma NV", "Ho Ten", "Chuc Vu", "Luong", "SDT");
+        System.out.printf("%-10s %-10s %-10s %-15s %-15s %-15s\n",
+                "Ma NV", "Ho", "Ten", "Chuc Vu", "Luong", "SDT");
         System.out.println("--------------------------------------------------------------------------");
 
         // In danh sach
         for (NhanVien nv : dsNV) {
-            String hoTen = nv.getHo() + " " + nv.getTen();
-            System.out.printf("%-10s %-20s %-15s %-10.2f %-15s\n",
-                    nv.getMaNV(), hoTen, nv.getChucVu(),
+            System.out.printf("%-10s %-10s %-10s %-15s %-15.2f %-15s\n",
+                    nv.getMaNV(), nv.getHo(), nv.getTen(), nv.getChucVu(),
                     nv.getLuong(), nv.getSDT());
         }
 
@@ -308,7 +244,7 @@ public class DanhSachNhanVien {
         String temp = in.readLine();
         int check = -1;
         for (int i = 0; i < dsNV.length; i++) {
-            if (temp.equals(dsNV[i].getMaNV())) {
+            if (temp.equalsIgnoreCase(dsNV[i].getMaNV())) {
                 check = i;
                 break;
             }
@@ -343,7 +279,7 @@ public class DanhSachNhanVien {
         String temp = in.readLine();
         int check = -1;
         for (int i = 0; i < dsNV.length; i++) {
-            if (temp.equals(dsNV[i].getMaNV())) {
+            if (temp.equalsIgnoreCase(dsNV[i].getMaNV())) {
                 check = i;
                 break;
             }
@@ -356,7 +292,7 @@ public class DanhSachNhanVien {
         }
     }
 
-    public void timKiemNV() throws Exception {
+    public void timKiemNVTheoMa() throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         if (dsNV == null || dsNV.length == 0) {
             System.out.println("Danh sach nhan vien chua duoc khoi tao!");
@@ -374,7 +310,7 @@ public class DanhSachNhanVien {
         String temp = in.readLine();
 
         for (int i = 0; i < dsNV.length; i++) {
-            if (temp.equals(dsNV[i].getMaNV())) {
+            if (temp.equalsIgnoreCase(dsNV[i].getMaNV())) {
                 dsNV[i].xuatNV();
                 return;
             }
@@ -383,7 +319,7 @@ public class DanhSachNhanVien {
         System.out.println("Khong tim thay nhan vien can tim!");
     }
 
-    public void sortByTen() throws Exception {
+    public void timKiemNVTheoTen() throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         if (dsNV == null || dsNV.length == 0) {
             System.out.println("Danh sach nhan vien chua duoc khoi tao!");
@@ -397,100 +333,17 @@ public class DanhSachNhanVien {
             }
             return;
         }
-        int choice;
-        while (true) {
-            System.out.println("""
-                    Ban muon sap xep theo kieu nao?
-                    1. Sap xep A-z
-                    2. Sap xep a-A
-                    0. Khong sap xep""");
-            choice = Integer.parseInt(in.readLine());
-            if (choice == 1) {
-                for (int i = 0; i < dsNV.length - 1; i++) {
-                    for (int y = 0; y < dsNV.length - i - 1; y++) {
-                        if (dsNV[y].getTen().compareToIgnoreCase(dsNV[y + 1].getTen()) > 0) { // >0 -> str1 > str2
-                            NhanVien temp = dsNV[y];
-                            dsNV[y] = dsNV[y + 1];
-                            dsNV[y + 1] = temp;
-                        }
+        System.out.print("Nhap ten nhan vien can tim: ");
+        String temp = in.readLine();
 
-                    }
-                }
+        for (int i = 0; i < dsNV.length; i++) {
+            if (temp.equalsIgnoreCase(dsNV[i].getTen())) {
+                dsNV[i].xuatNV();
                 return;
-            } else if (choice == 2) {
-                for (int i = 0; i < dsNV.length - 1; i++) {
-                    for (int y = 0; y < dsNV.length - i - 1; y++) {
-                        if (dsNV[y].getTen().compareToIgnoreCase(dsNV[y + 1].getTen()) < 0) { // <0 -> str1 < str2
-                            NhanVien temp = dsNV[y];
-                            dsNV[y] = dsNV[y + 1];
-                            dsNV[y + 1] = temp;
-                        }
-
-                    }
-                }
-                return;
-            } else if (choice == 0) {
-                return;
-            } else {
-                System.out.println("Cu phap khong dung, hay nhap lai!");
             }
         }
 
-    }
-
-    public void sortByLuong() throws Exception {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        if (dsNV == null || dsNV.length == 0) {
-            System.out.println("Danh sach nhan vien chua duoc khoi tao!");
-
-            System.out.print("Co muon khoi tao danh sach (y/n): ");
-            char choice;
-            choice = in.readLine().charAt(0);
-            if (choice == 'y' || choice == 'Y') {
-                khoiTaoDS();
-                return;
-            }
-            return;
-        }
-        int choice;
-        while (true) {
-            System.out.println("""
-                    Ban muon sap xep theo kieu nao?
-                    1. Sap xep tu thap den cao
-                    2. Sap xep tu cao den thap
-                    0. Khong sap xep""");
-            choice = Integer.parseInt(in.readLine());
-
-            if (choice == 1) {
-                for (int i = 0; i < dsNV.length - 1; i++) {
-                    for (int y = 0; y < dsNV.length - i - 1; y++) {
-                        if (dsNV[y].getLuong() > dsNV[y + 1].getLuong()) {
-                            NhanVien temp = dsNV[y];
-                            dsNV[y] = dsNV[y + 1];
-                            dsNV[y + 1] = temp;
-                        }
-
-                    }
-                }
-                return;
-            } else if (choice == 2) {
-                for (int i = 0; i < dsNV.length - 1; i++) {
-                    for (int y = 0; y < dsNV.length - i - 1; y++) {
-                        if (dsNV[y].getLuong() < dsNV[y + 1].getLuong()) {
-                            NhanVien temp = dsNV[y];
-                            dsNV[y] = dsNV[y + 1];
-                            dsNV[y + 1] = temp;
-                        }
-
-                    }
-                }
-                return;
-            } else if (choice == 0) {
-                return;
-            } else {
-                System.out.println("Cu phap khong dung, hay nhap lai!");
-            }
-        }
+        System.out.println("Khong tim thay nhan vien can tim!");
     }
 
     public void thongKeLuong() throws Exception {
@@ -519,6 +372,14 @@ public class DanhSachNhanVien {
             }
         }
         System.out.println("Tong so nhan vien co luong > 1.200.000 dong: " + count);
+    }
 
+    public NhanVien layNV(String maNV) {
+        for (int i = 0; i < soLuongNV; i++) {
+            if (dsNV[i].getMaNV().equalsIgnoreCase(maNV)) {
+                return dsNV[i];
+            }
+        }
+        return null;
     }
 }

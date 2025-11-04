@@ -2,6 +2,9 @@ package src.model.sach;
 
 import java.util.Scanner;
 
+import src.manager.DanhSachNhaXuatBan;
+import src.manager.DanhSachTacGia;
+
 public class SachGiaoKhoa extends Sach {
     private String lop;
     private String monHoc;
@@ -39,9 +42,9 @@ public class SachGiaoKhoa extends Sach {
     }
 
     @Override
-    public void nhap() {
+    public void nhap(DanhSachTacGia dstg, DanhSachNhaXuatBan dsnxb) {
         Scanner sc = new Scanner(System.in);
-        super.nhap();
+        super.nhap(dstg, dsnxb);
         System.out.print("Nhap lop: ");
         lop = sc.nextLine();
         System.out.print("Nhap mon hoc: ");
@@ -49,9 +52,9 @@ public class SachGiaoKhoa extends Sach {
     }
 
     @Override
-    public void nhapKhongMa() {
+    public void nhapKhongMa(DanhSachTacGia dstg, DanhSachNhaXuatBan dsnxb) {
         Scanner sc = new Scanner(System.in);
-        super.nhapKhongMa();
+        super.nhapKhongMa(dstg, dsnxb);
         System.out.print("Nhap lop: ");
         lop = sc.nextLine();
         System.out.print("Nhap mon hoc: ");
@@ -61,7 +64,7 @@ public class SachGiaoKhoa extends Sach {
     @Override
     public void xuat() {
         super.xuat();
-        System.out.printf(" %-15s | %-15s | %-15s | %-15s |\n", lop, monHoc, "-", "-");
+        System.out.printf(" %-5s | %-10s | %-12s | %-12s |\n", lop, monHoc, "-", "-");
     }
 
     @Override

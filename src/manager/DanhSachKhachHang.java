@@ -6,241 +6,199 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.Scanner;
-
 import src.model.doitac.KhachHang;
 
 public class DanhSachKhachHang {
-    private int n;
-    private KhachHang[] kh;
+    private int soLuongKhachHang;
+    private KhachHang[] dskh;
+
+    KhachHang kh = new KhachHang();
 
     public DanhSachKhachHang() {
-        n = 0;
-        kh = new KhachHang[0];
+        soLuongKhachHang = 0;
+        dskh = new KhachHang[0];
     }
 
-    // Kiểm tra mã khách hàng có trùng không
-    public boolean kiemTraMaKH(String maKH, int soLuongHienTai) {
-        for (int i = 0; i < soLuongHienTai; i++) {
-            if (kh[i].getMaKH().equalsIgnoreCase(maKH)) {
-                return true;
+    public DanhSachKhachHang(KhachHang[] dskh) {
+        this.dskh = dskh;
+    }
+
+    public DanhSachKhachHang(DanhSachKhachHang ds) {
+        this.dskh = ds.dskh;
+    }
+
+    public KhachHang[] getDSKH() {
+        return dskh;
+    }
+
+    public void setDSKH(KhachHang[] dskh) {
+        this.dskh = dskh;
+    }
+
+    public void themKhachHang() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhap so luong khach hang muon them:");
+        int n = sc.nextInt();
+        dskh = Arrays.copyOf(dskh, dskh.length + n);
+        for (int i = 0; i < n; i++) {
+            dskh[soLuongKhachHang] = new KhachHang();
+            dskh[soLuongKhachHang].nhap();
+            sc.nextLine();
+            while (kiemTraMaKhachHang(dskh[soLuongKhachHang].getMaKhachHang())) {
+                System.out.print("Ma khach hang bi trung! Vui long nhap lai ma:");
+                String maNhapLai = sc.nextLine();
+                dskh[soLuongKhachHang].setMaKhachHang(maNhapLai);
             }
+            soLuongKhachHang++;
+        }
+    }
+
+    public void xoaKhachHang(String maKhachHang) {
+        int vitri = -1;
+        for (int i = 0; i < soLuongKhachHang; i++) {
+            if (dskh[i].getMaKhachHang().equalsIgnoreCase(maKhachHang)) {
+                vitri = i;
+                break;
+            }
+        }
+        if (vitri != -1) {
+            for (int j = vitri; j < soLuongKhachHang - 1; j++) {
+                dskh[j] = dskh[j + 1];
+            }
+            soLuongKhachHang--;
+            dskh = Arrays.copyOf(dskh, soLuongKhachHang);
+            System.out.println("Da xoa khach hang nay khoi danh sach!");
+        } else {
+            System.out.println("Khong co khach hang nay trong danh sach!");
+        }
+    }
+
+    public void hienThithongTinKhachHang() {
+        if (soLuongKhachHang == 0) {
+            System.out.println("Danh sach trong!");
+        } else {
+            System.out.println("========== DANH SACH KHACH HANG ==========");
+            System.out.printf("| %-15s | %-10s | %-10s | %-15s | %-25s | %-15s |\n", "Ma khach hang", "Ho", "Ten",
+                    "So dien thoai", "Email", "Dia chi");
+            for (int i = 0; i < soLuongKhachHang; i++) {
+                dskh[i].xuat();
+            }
+        }
+    }
+
+    public void suaThongTinKhachHang(String maKhachHang) {
+        Scanner sc = new Scanner(System.in);
+        int luachon = 1;
+        for (int i = 0; i < soLuongKhachHang; i++) {
+            if (dskh[i].getMaKhachHang().equalsIgnoreCase(maKhachHang)) {
+                while (luachon > 0) {
+                    System.out.println("""
+                            ===== SUA THONG TIN KHACH HANG
+                            1. Sua ho
+                            2. Sua ten
+                            3. Sua dia chi
+                            4. Sua so dien thoai
+                            5. Sua email
+                            0. Thoat!
+                            """);
+                    System.out.print("Nhap lua chon: ");
+                    luachon = sc.nextInt();
+                    sc.nextLine();
+                    switch (luachon) {
+                        case 1:
+                            System.out.print("Nhap ho khach hang:");
+                            String ho = sc.nextLine();
+                            dskh[i].setHo(ho);
+                            break;
+                        case 2:
+                            System.out.print("Nhap ten khach hang:");
+                            String ten = sc.nextLine();
+                            dskh[i].setTen(ten);
+                            break;
+                        case 3:
+                            System.out.print("Nhap dia chi khach hang:");
+                            String diachi = sc.nextLine();
+                            dskh[i].setDiaChi(diachi);
+                            break;
+                        case 4:
+                            System.out.println("Nhap SDT khach hang:");
+                            String SDT = sc.nextLine();
+                            dskh[i].setSoDienThoai(SDT);
+                            break;
+                        case 5:
+                            System.out.print("Nhap email khach hang:");
+                            String email = sc.nextLine();
+                            dskh[i].setEmail(email);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    public KhachHang TimKHTheoMa(String maKhachHang) {
+        KhachHang kq = null;
+        for (int i = 0; i < soLuongKhachHang; i++) {
+            if (dskh[i].getMaKhachHang().equalsIgnoreCase(maKhachHang)) {
+                kq = dskh[i];
+                System.out.println("===== THONG TIN KHACH HANG =====");
+                System.out.printf("| %-15s | %-10s | %-10s | %-15s | %-25s | %-15s |\n", "Ma khach hang", "Ho", "Ten",
+                        "So dien thoai", "Email", "Dia chi");
+                kq.xuat();
+            }
+        }
+        return kq;
+    }
+
+    public boolean kiemTraMaKhachHang(String maKhachHang) {
+        for (int i = 0; i < soLuongKhachHang; i++) {
+            if (dskh[i].getMaKhachHang().equalsIgnoreCase(maKhachHang))
+                return true;
         }
         return false;
     }
 
-    // Nhập khách hàng
-    public void nhapKhachHang() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap so luong khach hang: ");
-        n = sc.nextInt();
-        sc.nextLine();
-
-        kh = new KhachHang[n];
-
-        for (int i = 0; i < n; i++) {
-            System.out.println("----- Thong tin khach hang thu " + (i + 1) + " -----");
-
-            kh[i] = new KhachHang();
-
-            String maKH;
-            do {
-                System.out.print("Nhap ma khach hang: ");
-                maKH = sc.nextLine();
-                if (kiemTraMaKH(maKH, i)) {
-                    System.out.println("Ma da ton tai, vui long nhap lai!");
-                }
-            } while (kiemTraMaKH(maKH, i));
-
-            kh[i].setMaKH(maKH);
-            kh[i].nhapKhongMa();
-        }
-
-    }
-
-    // Xuất danh sách khách hàng
-    public void xuatKhachHang() {
-        if (n == 0) {
-            System.out.println("Danh sach khach hang rong!");
-            return;
-        }
-
-        System.out.println("----- Danh sách khách hàng -----");
-        System.out.printf("| %-20s | %-20s | %-20s | %-20s | %-20s | %-20s |\n", "Ma khach hang", "Ho", "Ten",
-                "So dien thoai", "Email", "Dia chi");
-        for (int i = 0; i < n; i++) {
-            kh[i].xuat();
-        }
-    }
-
-    // Thêm khách hàng
-    public void themKhachHang() {
-        Scanner sc = new Scanner(System.in);
-        KhachHang x = new KhachHang();
-
-        String maKH;
-        do {
-            System.out.print("Nhap ma khach hang: ");
-            maKH = sc.nextLine();
-            if (kiemTraMaKH(maKH, n)) {
-                System.out.println("Ma da ton tai, vui long nhap lai!");
-            }
-        } while (kiemTraMaKH(maKH, n));
-
-        x.setMaKH(maKH);
-        x.nhapKhongMa();
-
-        kh = Arrays.copyOf(kh, n + 1);
-        kh[n] = x;
-        n++;
-    }
-
-    // Xóa khách hàng theo mã
-    public void xoaKhachHang() {
-        if (n == 0) {
-            System.out.println("Danh sach khach hang rong!");
-            return;
-        }
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap ma khach hang can xoa: ");
-        String maKH = sc.nextLine();
-
-        int viTri = -1;
-        for (int i = 0; i < n; i++) {
-            if (kh[i].getMaKH().equalsIgnoreCase(maKH)) {
-                viTri = i;
-                break;
+    public KhachHang TimKiemTheoTen(String ten) {
+        KhachHang kq = null;
+        for (int i = 0; i < soLuongKhachHang; i++) {
+            if (dskh[i].getTen().equalsIgnoreCase(ten)) {
+                kq = dskh[i];
+                System.out.println("===== THONG TIN KHACH HANG =====");
+                System.out.printf("| %-15s | %-10s | %-10s | %-15s | %-25s | %-15s |\n", "Ma khach hang", "Ho", "Ten",
+                        "So dien thoai", "Email", "Dia chi");
+                kq.xuat();
             }
         }
-
-        if (viTri == -1) {
-            System.out.println("Khong tim thay khach hang co ma: " + maKH);
-            return;
-        }
-
-        for (int i = viTri; i < n - 1; i++) {
-            kh[i] = kh[i + 1];
-        }
-
-        n--;
-        kh = Arrays.copyOf(kh, n);
+        return kq;
     }
 
-    // Sửa thông tin khách hàng
-    public void suaKhachHang() {
-        if (n == 0) {
-            System.out.println("Danh sach khach hang rong!");
-            return;
-        }
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap ma khach hang can sua: ");
-        String maKH = sc.nextLine();
-
-        int viTri = -1;
-        for (int i = 0; i < n; i++) {
-            if (kh[i].getMaKH().equalsIgnoreCase(maKH)) {
-                viTri = i;
-            }
-        }
-
-        if (viTri == -1) {
-            System.out.println("Khong tim thay khach hang co ma: " + maKH);
-            return;
-        }
-
-        int lc;
-        do {
-            System.out.println("1. Ho \n2. Ten \n3. So dien thoai \n4. Email \n5. Dia chi \n0. Thoat");
-            System.out.print("Nhap lua chon: ");
-            lc = sc.nextInt();
-            sc.nextLine();
-
-            switch (lc) {
-                case 1:
-                    System.out.print("Nhap ho moi: ");
-                    kh[viTri].setHo(sc.nextLine());
-                    break;
-                case 2:
-                    System.out.print("Nhap ten moi: ");
-                    kh[viTri].setTen(sc.nextLine());
-                    break;
-                case 3:
-                    System.out.print("Nhap so dien thoai moi: ");
-                    kh[viTri].setSoDienThoai(sc.nextLine());
-                    break;
-                case 4:
-                    System.out.print("Nhap email moi: ");
-                    kh[viTri].setEmail(sc.nextLine());
-                    break;
-                case 5:
-                    System.out.print("Nhap dia chi moi: ");
-                    kh[viTri].setDiaChi(sc.nextLine());
-                    break;
-                case 0:
-                    System.out.println("Thoat!");
-                    break;
-                default:
-                    System.out.println("Lua chon khong hop le, vui long nhap lai!");
-            }
-        } while (lc != 0);
+    public void thongKeSoLuongKH() {
+        System.out.println("Tong so luong khach hang: " + soLuongKhachHang);
     }
 
-    // === Tìm kiếm ===
-    // Tìm kiếm khách hàng theo mã
-    public void timKiemKHTheoMa() {
-        if (n == 0) {
-            System.out.println("Danh sach khach hang rong!");
-            return;
-        }
+    public void ghiFile() {
+        try {
+            FileWriter fw = new FileWriter("src/data/DanhSachKhachHang.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
 
-        boolean timThay = false;
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap ma khach hang can tim: ");
-        String maKH = sc.nextLine();
-
-        for (int i = 0; i < n; i++) {
-            if (kh[i].getMaKH().equalsIgnoreCase(maKH)) {
-                kh[i].xuat();
-                timThay = true;
+            for (int i = 0; i < soLuongKhachHang; i++) {
+                KhachHang khi = (KhachHang) dskh[i];
+                bw.write(khi.getMaKhachHang() + "," +
+                        khi.getHo() + "," +
+                        khi.getTen() + "," +
+                        khi.getSoDienThoai() + "," +
+                        khi.getEmail() + "," +
+                        khi.getDiaChi());
+                bw.newLine();
             }
-        }
-
-        if (!timThay) {
-            System.out.println("Khong tim thay khach hang co ma: " + maKH);
+            bw.close();
+            fw.close();
+            System.out.println("Ghi file thanh cong!");
+        } catch (Exception e) {
+            System.out.println("Loi ghi file: " + e.getMessage());
         }
     }
 
-    // Tìm kiếm khách hàng theo tên
-    public void timKiemKHTheoTen() {
-        if (n == 0) {
-            System.out.println("Danh sach khach hang rong!");
-            return;
-        }
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap ten khach hang can tim: ");
-        String ten = sc.nextLine();
-
-        boolean timThay = false;
-
-        for (int i = 0; i < n; i++) {
-            if (kh[i].getTen().equalsIgnoreCase(ten)) {
-                kh[i].xuat();
-                timThay = true;
-            }
-        }
-
-        if (!timThay) {
-            System.out.println("Khong tim thay khach hang co ten: " + ten);
-        }
-    }
-
-    // === Thống kê ===
-
-    // === Đọc - Ghi file ===
-    // Đọc file
     public void docFile() {
         try {
             FileReader fr = new FileReader("src/data/DanhSachKhachHang.txt");
@@ -254,8 +212,8 @@ public class DanhSachKhachHang {
             br.close();
             fr.close();
 
-            kh = new KhachHang[count];
-            n = 0;
+            dskh = new KhachHang[count];
+            soLuongKhachHang = 0;
 
             FileReader fri = new FileReader("src/data/DanhSachKhachHang.txt");
             BufferedReader bri = new BufferedReader(fri);
@@ -270,9 +228,9 @@ public class DanhSachKhachHang {
                     String email = data[4].trim();
                     String diaChi = data[5].trim();
 
-                    kh[n] = new KhachHang(maKH, ho, ten, soDienThoai, email, diaChi);
+                    dskh[soLuongKhachHang] = new KhachHang(maKH, ho, ten, soDienThoai, email, diaChi);
                 }
-                n++;
+                soLuongKhachHang++;
             }
             bri.close();
             fri.close();
@@ -280,32 +238,6 @@ public class DanhSachKhachHang {
 
         } catch (Exception e) {
             System.out.println("Loi doc file: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    // // Ghi file
-    public void ghiFile() {
-        try {
-            FileWriter fw = new FileWriter("src/data/DanhSachKhachHang.txt");
-            BufferedWriter bw = new BufferedWriter(fw);
-
-            for (int i = 0; i < n; i++) {
-                KhachHang khi = (KhachHang) kh[i];
-                bw.write(khi.getMaKH() + "," +
-                        khi.getHo() + "," +
-                        khi.getTen() + "," +
-                        khi.getSoDienThoai() + "," +
-                        khi.getEmail() + "," +
-                        khi.getDiaChi());
-                bw.newLine();
-            }
-            bw.close();
-            fw.close();
-            System.out.println("Ghi file thanh cong!");
-        } catch (Exception e) {
-            System.out.println("Loi ghi file: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }
